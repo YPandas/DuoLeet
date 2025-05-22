@@ -42,7 +42,7 @@ export default function Navigation({
     <div 
       className={cn(
         "bg-white w-64 border-r border-neutral-200 flex-shrink-0 transition-transform duration-300 ease-in-out lg:static fixed inset-y-0 left-0 z-40",
-        sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        sidebarOpen ? "translate-x-0" : "-translate-x-full"
       )}
     >
       <div className="flex flex-col h-full">

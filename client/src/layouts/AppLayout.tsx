@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { Bell } from "lucide-react";
+import { Bell, Menu, ChevronLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface AppLayoutProps {
@@ -49,6 +49,10 @@ export default function AppLayout({
     });
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <div className="h-screen flex overflow-hidden">
       {/* Sidebar / Navigation */}
@@ -61,12 +65,10 @@ export default function AppLayout({
       {/* Mobile header */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-white border-b border-neutral-200 h-16 flex items-center px-4">
         <button 
-          onClick={() => setSidebarOpen(!sidebarOpen)} 
+          onClick={toggleSidebar} 
           className="text-neutral-500 hover:text-neutral-700 focus:outline-none"
         >
-          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+          <Menu className="h-6 w-6" />
         </button>
         <div className="ml-4 flex-1">
           <span className="text-xl font-bold text-primary">DuoLeetcode</span>
@@ -82,9 +84,19 @@ export default function AppLayout({
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Page Header */}
         <header className="hidden lg:flex h-16 bg-white border-b border-neutral-200 px-6 items-center justify-between">
-          <h1 className="text-xl font-semibold text-neutral-900">
-            {getPageTitle()}
-          </h1>
+          <div className="flex items-center">
+            <Button 
+              onClick={toggleSidebar} 
+              variant="ghost" 
+              size="icon" 
+              className="mr-4 text-neutral-500 hover:text-neutral-700"
+            >
+              {sidebarOpen ? <ChevronLeft className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+            <h1 className="text-xl font-semibold text-neutral-900">
+              {getPageTitle()}
+            </h1>
+          </div>
           
           <div className="flex items-center">
             <Button 
