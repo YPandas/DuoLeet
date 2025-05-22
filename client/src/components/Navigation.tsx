@@ -27,9 +27,9 @@ export default function Navigation({
   const NAV_ITEMS = [
     { path: "/", label: "Dashboard", icon: <Home className="w-5 h-5" /> },
     { path: "/problems", label: "Problems", icon: <Code2 className="w-5 h-5" /> },
-    { path: "/profile", label: "Profile", icon: <User className="w-5 h-5" /> },
     { path: "/leaderboard", label: "Leaderboard", icon: <Trophy className="w-5 h-5" /> },
     { path: "/friends", label: "Friends", icon: <Users className="w-5 h-5" /> },
+    { path: "/profile", label: "Profile", icon: <User className="w-5 h-5" /> },
   ];
 
   const isActive = (path: string) => {
