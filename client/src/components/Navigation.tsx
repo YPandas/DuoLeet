@@ -38,12 +38,13 @@ export default function Navigation({
     return false;
   };
 
+  if (!sidebarOpen) {
+    return null;
+  }
+  
   return (
     <div 
-      className={cn(
-        "bg-white w-64 border-r border-neutral-200 flex-shrink-0 transition-transform duration-300 ease-in-out lg:static fixed inset-y-0 left-0 z-40",
-        sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      )}
+      className="bg-white w-full h-full border-r border-neutral-200 flex-shrink-0 transition-transform duration-300 ease-in-out lg:static fixed inset-y-0 left-0 z-40"
     >
       <div className="flex flex-col h-full">
         {/* Logo and Header */}

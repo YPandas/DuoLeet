@@ -56,11 +56,13 @@ export default function AppLayout({
   return (
     <div className="h-screen flex overflow-hidden">
       {/* Sidebar / Navigation */}
-      <Navigation 
-        sidebarOpen={sidebarOpen} 
-        setSidebarOpen={setSidebarOpen} 
-        onOpenLoginModal={onOpenLoginModal}
-      />
+      <div className={`${sidebarOpen ? 'w-64' : 'w-0'} lg:transition-width lg:duration-300 lg:ease-in-out flex-shrink-0`}>
+        <Navigation 
+          sidebarOpen={sidebarOpen} 
+          setSidebarOpen={setSidebarOpen} 
+          onOpenLoginModal={onOpenLoginModal}
+        />
+      </div>
       
       {/* Mobile header */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-white border-b border-neutral-200 h-16 flex items-center px-4">
