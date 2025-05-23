@@ -86,7 +86,7 @@ export default function UserAvatar({
             <img 
               src={avatarUrl} 
               alt="User avatar" 
-              className="w-40 h-40 object-cover rounded-full border-4 border-primary mb-3" 
+              className="w-40 h-40 object-cover object-center rounded-full border-4 border-primary mb-3" 
             />
             <Badge 
               className="absolute bottom-3 right-0 bg-success" 

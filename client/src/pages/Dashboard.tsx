@@ -168,12 +168,12 @@ export default function Dashboard() {
         <Streak currentStreak={12} lastTwoWeeks={lastTwoWeeks} />
         <GoalProgress goals={goals} onEdit={() => {}} />
         <UserAvatar 
-          name="Cody Fox"
+          name="CodeMaster"
           level={3}
           xp={840}
           xpRequired={1000}
           streak={7}
-          avatarUrl="https://images.unsplash.com/photo-1500479694472-551d1fb6258d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200"
+          avatarUrl="/src/avatars/fox2.png"
           onCustomize={() => {}}
         />
       </div>
