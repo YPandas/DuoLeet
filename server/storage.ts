@@ -91,58 +91,6 @@ export interface IStorage {
   getLeaderboard(type: "global" | "friends", userId?: number): Promise<User[]>;
 }
 
-export class DatabaseStorage implements IStorage {
-  async getUser(id: number): Promise<User | undefined> {
-    const { db } = await import('./db');
-    const { users } = await import('@shared/schema');
-    const { eq } = await import('drizzle-orm');
-    
-    const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user || undefined;
-  }
-
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    const { db } = await import('./db');
-    const { users } = await import('@shared/schema');
-    const { eq } = await import('drizzle-orm');
-    
-    const [user] = await db.select().from(users).where(eq(users.username, username));
-    return user || undefined;
-  }
-
-  async getUserByEmail(email: string): Promise<User | undefined> {
-    const { db } = await import('./db');
-    const { users } = await import('@shared/schema');
-    const { eq } = await import('drizzle-orm');
-    
-    const [user] = await db.select().from(users).where(eq(users.email, email));
-    return user || undefined;
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const { db } = await import('./db');
-    const { users } = await import('@shared/schema');
-    
-    const [user] = await db
-      .insert(users)
-      .values(insertUser)
-      .returning();
-    return user;
-  }
-
-  async updateUser(id: number, data: Partial<User>): Promise<User | undefined> {
-    const { db } = await import('./db');
-    const { users } = await import('@shared/schema');
-    const { eq } = await import('drizzle-orm');
-    
-    const [user] = await db
-      .update(users)
-      .set(data)
-      .where(eq(users.id, id))
-      .returning();
-    return user || undefined;
-  }
-
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private problems: Map<number, Problem>;

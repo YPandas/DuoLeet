@@ -4,7 +4,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, username: string, avatarId?: string) => Promise<void>;
+  signup: (email: string, password: string, username: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -12,7 +12,7 @@ interface User {
   id: string;
   username: string;
   email: string;
-  avatarId: string;
+  avatar: string;
   level: number;
   streak: number;
   xp: number;
@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       id: "1",
       username: "CodeMaster",
       email,
-      avatarId: "wolf2",
+      avatar: "https://images.unsplash.com/photo-1500479694472-551d1fb6258d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
       level: 3,
       streak: 7,
       xp: 840
@@ -52,13 +52,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsAuthenticated(true);
   };
 
-  const signup = async (email: string, password: string, username: string, avatarId: string = "fox1") => {
+  const signup = async (email: string, password: string, username: string) => {
     // For demo purposes, we'll just simulate a signup
     const mockUser: User = {
       id: "1",
       username,
       email,
-      avatarId,
+      avatar: "https://images.unsplash.com/photo-1500479694472-551d1fb6258d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
       level: 1,
       streak: 0,
       xp: 0
