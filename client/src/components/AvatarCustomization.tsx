@@ -35,7 +35,7 @@ export default function AvatarCustomization({
               onClick={() => onSelectAvatar(avatar.id)}
               className={cn(
                 "relative rounded-lg overflow-hidden cursor-pointer transition-all duration-200 transform hover:scale-105",
-                selectedAvatar === avatar.id && "ring-2 ring-primary scale-105"
+                selectedAvatar === avatar.id && "scale-105 opacity-90"
               )}
             >
               <img 
