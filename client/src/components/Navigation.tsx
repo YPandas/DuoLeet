@@ -9,6 +9,7 @@ import {
   Users, 
   X
 } from "lucide-react";
+import { getAvatarUrl } from "@/lib/avatars";
 
 interface NavigationProps {
   sidebarOpen: boolean;
@@ -90,8 +91,8 @@ export default function Navigation({
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <img 
-                  className="h-10 w-10 rounded-full" 
-                  src="https://images.unsplash.com/photo-1500479694472-551d1fb6258d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100" 
+                  className="h-10 w-10 rounded-full object-cover" 
+                  src={getAvatarUrl(null)} 
                   alt="User avatar" 
                 />
               </div>
