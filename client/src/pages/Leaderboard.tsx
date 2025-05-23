@@ -64,7 +64,7 @@ const PodiumUser = ({
         <img 
           src={user.avatar.startsWith('/') ? user.avatar : `https://images.unsplash.com/photo-${user.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150`}
           alt={`${position} place avatar`} 
-          className={`${sizeMap[position as keyof typeof sizeMap]} rounded-full object-cover object-center border-4 border-primary-100 mb-2`} 
+          className={`${sizeMap[position as keyof typeof sizeMap]} object-cover object-center mb-2`} 
         />
         {iconMap[position as keyof typeof iconMap]}
         <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center font-bold text-lg">
