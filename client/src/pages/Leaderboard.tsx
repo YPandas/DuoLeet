@@ -62,9 +62,9 @@ const PodiumUser = ({
     <div className={`flex flex-col items-center ${marginMap[position as keyof typeof marginMap]}`}>
       <div className="relative">
         <img 
-          src={`https://images.unsplash.com/photo-${user.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150`}
+          src={user.avatar.startsWith('/') ? user.avatar : `https://images.unsplash.com/photo-${user.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150`}
           alt={`${position} place avatar`} 
-          className={`${sizeMap[position as keyof typeof sizeMap]} rounded-full object-cover border-4 border-primary-100 mb-2`} 
+          className={`${sizeMap[position as keyof typeof sizeMap]} rounded-full object-cover object-center border-4 border-primary-100 mb-2`} 
         />
         {iconMap[position as keyof typeof iconMap]}
         <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center font-bold text-lg">
@@ -118,9 +118,9 @@ const LeaderboardTable = ({ users }: { users: LeaderboardUser[] }) => {
                   <div className="flex items-center">
                     <div className="w-8 h-8 rounded-full bg-neutral-300 overflow-hidden mr-3">
                       <img 
-                        src={`https://images.unsplash.com/photo-${user.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100`} 
+                        src={user.avatar.startsWith('/') ? user.avatar : `https://images.unsplash.com/photo-${user.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100`} 
                         alt="User avatar" 
-                        className="w-full h-full object-cover" 
+                        className="w-full h-full object-cover object-center" 
                       />
                     </div>
                     <span className="font-medium">{user.username}</span>
@@ -211,7 +211,7 @@ export default function Leaderboard() {
     {
       id: 1,
       username: "ByteMaster",
-      avatar: "1500479694472-551d1fb6258d",
+      avatar: "/src/avatars/wolf3.png",
       level: 10,
       streak: 12,
       problemsSolved: 312,
@@ -220,7 +220,7 @@ export default function Leaderboard() {
     {
       id: 2,
       username: "CodeOwl",
-      avatar: "1618005182384-a83a8bd57fbe",
+      avatar: "/src/avatars/fox3.png",
       level: 8,
       streak: 9,
       problemsSolved: 295,
@@ -229,7 +229,7 @@ export default function Leaderboard() {
     {
       id: 3,
       username: "TurtleCoder",
-      avatar: "1518467166778-b88f373ffec7",
+      avatar: "/src/avatars/giraffe3.png",
       level: 7,
       streak: 5,
       problemsSolved: 278,
@@ -358,9 +358,9 @@ export default function Leaderboard() {
               <div className="flex items-center px-6 py-4">
                 <div className="w-8 h-8 rounded-full bg-neutral-300 overflow-hidden mr-3">
                   <img 
-                    src={`https://images.unsplash.com/photo-${currentUser.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100`}
+                    src={currentUser.avatar.startsWith('/') ? currentUser.avatar : `https://images.unsplash.com/photo-${currentUser.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100`}
                     alt="User avatar" 
-                    className="w-full h-full object-cover" 
+                    className="w-full h-full object-cover object-center" 
                   />
                 </div>
                 <span className="font-medium text-primary-700">{currentUser.username} <span className="text-primary-500">(You)</span></span>
