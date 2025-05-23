@@ -47,9 +47,9 @@ const PodiumUser = ({
   };
 
   const sizeMap = {
-    1: "w-20 h-20",
-    2: "w-16 h-16",
-    3: "w-16 h-16"
+    1: "w-20 h-24",
+    2: "w-16 h-20",
+    3: "w-16 h-20"
   };
 
   const marginMap = {
