@@ -27,7 +27,7 @@ export default function Profile() {
     email: "alex.chen@example.com",
     github: "github.com/alexchen",
     discord: "alexc#1234",
-    avatar: "https://images.unsplash.com/photo-1500479694472-551d1fb6258d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200",
+    avatar: "/src/avatars/fox2.png",
     level: 3,
     streak: 7,
     problemsSolved: 42,
