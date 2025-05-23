@@ -149,10 +149,10 @@ export default function Profile() {
             <img 
               src={user.avatar} 
               alt="User avatar" 
-              className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-primary-100 object-cover object-center" 
+              className="w-32 h-32 md:w-30 md:h-30 rounded-full border-4 border-primary-100 object-contain bg-white object-center" 
             />
-            <div className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-success-500 border-4 border-white flex items-center justify-center">
-              <span className="text-white text-xs font-bold">{user.level}</span>
+            <div className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-success-500 border-4 border-red-400 flex items-center justify-center">
+              <span className="text-red-400 text-xs font-bold">{user.level}</span>
             </div>
           </div>
           
@@ -263,7 +263,7 @@ export default function Profile() {
               <img 
                 src={user.avatar} 
                 alt="User avatar" 
-                className="w-40 h-40 rounded-lg object-cover mb-4" 
+                className="w-40 h-40 rounded-lg object-contain mb-4" 
               />
               
               <div className="w-full bg-neutral-200 rounded-full h-2.5 mb-2">

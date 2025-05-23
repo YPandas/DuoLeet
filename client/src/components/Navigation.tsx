@@ -90,7 +90,7 @@ export default function Navigation({
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <img 
-                  className="h-10 w-10 rounded-full" 
+                  className="h-10 w-10 rounded-full object-contain object-center bg-white" 
                   src="/src/avatars/fox2.png" 
                   alt="User avatar" 
                 />

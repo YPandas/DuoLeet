@@ -112,7 +112,7 @@ export default function AppLayout({
             </Button>
             
             <Button 
-              onClick={isAuthenticated ? undefined : onOpenLoginModal} 
+              onClick={onOpenLoginModal} 
               variant="outline"
               className="flex items-center text-sm"
             >
