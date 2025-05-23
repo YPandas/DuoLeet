@@ -149,7 +149,7 @@ export default function Profile() {
             <img 
               src={user.avatar} 
               alt="User avatar" 
-              className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-primary-100" 
+              className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-primary-100 object-cover object-center" 
             />
             <div className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-success-500 border-4 border-white flex items-center justify-center">
               <span className="text-white text-xs font-bold">{user.level}</span>
