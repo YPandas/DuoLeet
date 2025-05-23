@@ -266,7 +266,7 @@ export default function Friends() {
                 className="border border-neutral-200 rounded-lg p-4 flex flex-col"
               >
                 <div className="flex items-center mb-3">
-                  <div className="h-12 w-12 rounded-full overflow-hidden">
+                  <div className="h-12 w-12 overflow-hidden">
                     <img
                       src={`https://images.unsplash.com/photo-${friend.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100`}
                       alt={`${friend.username} avatar`}
