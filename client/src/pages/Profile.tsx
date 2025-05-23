@@ -54,14 +54,14 @@ export default function Profile() {
     {
       id: "1",
       title: "5-day Streak",
-      icon: <Calendar className="h-5 w-5" />,
+      icon: <StreakIcon className="h-5 w-5" />,
       color: "warning",
       unlocked: true,
     },
     {
       id: "2",
       title: "Easy x10",
-      icon: <CheckCircle className="h-5 w-5" />,
+      icon: <EasyX10Icon className="h-5 w-5" />,
       color: "success",
       unlocked: true,
     },
