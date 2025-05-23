@@ -17,6 +17,8 @@ import {
   Medal
 } from "lucide-react";
 import Badge from "@/components/Badge";
+import StreakIcon from "@/components/StreakIcon";
+import EasyX10Icon from "@/components/EasyX10Icon";
 
 export default function Profile() {
   const user = {

@@ -5,6 +5,8 @@ import Streak from "@/components/Streak";
 import GoalProgress from "@/components/GoalProgress";
 import UserAvatar from "@/components/UserAvatar";
 import Badge from "@/components/Badge";
+import StreakIcon from "@/components/StreakIcon";
+import EasyX10Icon from "@/components/EasyX10Icon";
 import { Calendar, Flag, Code, CheckCircle, TrendingUp, Medal } from "lucide-react";
 
 export default function Dashboard() {
@@ -41,14 +43,14 @@ export default function Dashboard() {
     {
       id: "1",
       title: "5-day Streak",
-      icon: <Calendar className="h-5 w-5" />,
+      icon: <StreakIcon className="h-5 w-5" />,
       color: "warning",
       unlocked: true,
     },
     {
       id: "2",
       title: "Easy x10",
-      icon: <CheckCircle className="h-5 w-5" />,
+      icon: <EasyX10Icon className="h-5 w-5" />,
       color: "success",
       unlocked: true,
     },
