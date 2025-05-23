@@ -83,11 +83,13 @@ export default function UserAvatar({
         
         <div className="flex flex-col items-center">
           <div className="relative">
-            <img 
-              src={avatarUrl} 
-              alt="User avatar" 
-              className="w-40 h-40 object-contain bg-white object-center mb-3" 
-            />
+            <div className="w-40 h-40 rounded-full bg-white flex items-center justify-center mb-3">
+              <img 
+                src={avatarUrl} 
+                alt="User avatar" 
+                className="w-32 h-32 object-contain object-center" 
+              />
+            </div>
             <Badge 
               className="absolute bottom-3 right-0 bg-success" 
               variant="outline"
