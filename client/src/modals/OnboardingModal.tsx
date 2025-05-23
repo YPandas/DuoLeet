@@ -35,33 +35,18 @@ export default function OnboardingModal({ isOpen, onClose, onComplete }: Onboard
   const avatars = [
     {
       id: "fox",
-      name: "Fox",
-      imageUrl: "https://images.unsplash.com/photo-1620428268482-cf1851a36764?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+      name: "Baby Fox",
+      imageUrl: "/src/avatars/fox1.png"
     },
     {
-      id: "owl",
-      name: "Owl",
-      imageUrl: "https://pixabay.com/get/gcedbfd964e60bd423e14aaad982a883f047051ea392941a4b70d4d6e45754bc7a0135d670ce5f06c3f6aab75305078bd849491b669f9d029fd7545378253f464_1280.png"
+      id: "giraffe",
+      name: "Baby Giraffe",
+      imageUrl: "/src/avatars/giraffe1.png"
     },
     {
-      id: "panda",
-      name: "Panda",
-      imageUrl: "https://pixabay.com/get/ge2c6c779acb084f86fb8c1fb6aca5ccaf3e2b79429a37bea538014467a60ce5e92af170bb474376ea3da14f63e5dfb742afbee4ff33b05a819209cbd773b827c_1280.jpg"
-    },
-    {
-      id: "turtle",
-      name: "Turtle",
-      imageUrl: "https://images.unsplash.com/photo-1518467166778-b88f373ffec7?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      id: "rabbit",
-      name: "Rabbit",
-      imageUrl: "https://pixabay.com/get/gb15a4ec9c55f05e9581a61c771b3179bd222325410bf92723b5e7072deab0863623b62c769fcf1218b2c94fc9b92d9e04b913072e946d2ce67cc21aae61b86f8_1280.jpg"
-    },
-    {
-      id: "cat",
-      name: "Cat",
-      imageUrl: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+      id: "wolf",
+      name: "Baby Wolf",
+      imageUrl: "/src/avatars/wolf1.png"
     }
   ];
   
