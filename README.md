@@ -3,7 +3,7 @@
   
   # 🎯 DuoLeet - Programming Practice App
   
-  A full-stack application for practicing programming interview questions with an interactive leaderboard and pet system.
+  An interactive app that blends gamified learning and coding challenges to help users of all backgrounds ace their programming interviews through daily practice.
 </div>
 
 ---
