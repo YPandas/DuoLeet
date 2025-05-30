@@ -1,6 +1,10 @@
-## DuoLeet - Programming Practice App
-
-A full-stack application for practicing programming interview questions with an interactive leaderboard and pet system.
+<div align="center">
+  <img src="DuoLeet_logo.png" alt="DuoLeet Logo" width="200" height="200">
+  
+  # 🎯 DuoLeet - Programming Practice App
+  
+  A full-stack application for practicing programming interview questions with an interactive leaderboard and pet system.
+</div>
 
 ---
 
@@ -10,52 +14,36 @@ A full-stack application for practicing programming interview questions with an 
 
 * Node.js (v14 or higher)
 * npm (comes with Node.js)
-* OpenAI API key (platform.openai.com)
 
-#### Setup and Installation
+#### Setup & Running the Application
 
 1. **Clone the repository**
-
    ```bash
-   git clone git@github.com:YPandas/CS188_DuoLeet.git
-   cd CS188_DuoLeet
+   git clone git@github.com:YPandas/DuoLeet.git
+   cd DuoLeet
    ```
 
-2. **Set up the backend**
-
+2. **Install dependencies**
+At root directory, run:
    ```bash
-   cd server
    npm install
    ```
 
-3. **Set up the frontend**
-
+3. **Run the frontend**
+At root directory, run:
    ```bash
-   cd client
-   npm install
+   npx vite
    ```
+It will show something like:
 
----
+```bash
+  VITE v5.4.14  ready in XYZ ms
 
-### Running the Application
-
-1. **Start the backend server**
-
-   ```bash
-   cd server
-   npm start
-   ```
-
-   The server will run on `http://localhost:5001`.
-
-2. **Start the frontend** (in a new terminal)
-
-   ```bash
-   cd client
-   npm start
-   ```
-
-   The client will run on `http://localhost:3000`.
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+  ```
+Open the URL in your browser to view the app.
 
 ---
 
