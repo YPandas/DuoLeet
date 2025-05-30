@@ -61,9 +61,9 @@
 
 ### Interaction Flows:
 
-* Our first interaction flow includes the main coding interface in DuoLeet where users can practice Leetcode style questions with the ability to check their work and view solutions to problems to solidify their understanding. We aim to enable users to work on existing practice problems as well as newly created unique problems that help solidify understanding in a topic area.
+* Our first interaction flow involves a coding interface in DuoLeet where users can practice Leetcode style questions with the ability to check their work and view solutions to problems to solidify their understanding. We aim to enable users to work on existing practice problems as well as newly created unique problems that help solidify understanding in a topic area. Users will also be able to view solutions to practice problems as well as particpate in a discussion forum. Supported languages are: Javascript, Python3, Java, and C++. 
   
-* Our second main interaction flow involves the leaderboard and friends sections of our app, where users can compete with their friends to stay motivated to do coding interview problems. By implementing this second major interaction flow, we allow users to connect with others and work on problems collaboratively before an upcoming interview.
+* Our second main interaction flow involves the leaderboard and friends sections of our app, where users can compete with their friends to stay motivated to do coding interview problems. By implementing this second major interaction flow, we allow users to connect with others and work on problems collaboratively before an upcoming interview. To motivate users to use DuoLeet over existing platforms, we developed an interactive and competitive set of challenges to inspire users to continuously practice over time.
 
 
 ---
