@@ -29,7 +29,9 @@ export default function Problem() {
     constraints: problemData.constraints,
   };
   
-  const initialCode = problemData.starterCode[selectedLanguage as keyof typeof problemData.starterCode];
+  const getCurrentCode = () => {
+    return problemData.starterCode[selectedLanguage as keyof typeof problemData.starterCode];
+  };
   
   const testCases = problemData.testCases.map(testCase => ({
     input: testCase.input,
@@ -159,7 +161,7 @@ export default function Problem() {
         <div className="w-full md:w-7/12 lg:w-2/3 flex flex-col">
           <CodeEditor 
             problemId={problem.id}
-            initialCode={initialCode}
+            initialCode={getCurrentCode()}
             testCases={testCases}
             language={selectedLanguage}
             onLanguageChange={(newLanguage) => {
