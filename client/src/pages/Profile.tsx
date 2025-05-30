@@ -38,7 +38,7 @@ export default function Profile() {
     mediumProblems: 18,
     hardProblems: 4,
     acceptanceRate: 78.5,
-    averageTime: "15 min",
+    averageTime: "50 min",
     longestStreak: 12,
     currentStreak: user.streak,
     totalSubmissions: 89,

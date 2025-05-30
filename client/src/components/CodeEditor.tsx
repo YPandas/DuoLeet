@@ -12,15 +12,19 @@ interface TestCase {
 }
 
 interface CodeEditorProps {
-  problemId: string;
-  initialCode: string;
-  testCases: TestCase[];
+  initialCode?: string;
+  language?: string;
+  testCases?: TestCase[];
 }
 
-export default function CodeEditor({ problemId, initialCode, testCases: initialTestCases }: CodeEditorProps) {
-  const [language, setLanguage] = useState("python");
+export default function CodeEditor({ 
+  initialCode = "", 
+  language: initialLanguage = "python",
+  testCases = [] 
+}: CodeEditorProps) {
+  const [language, setLanguage] = useState(initialLanguage);
   const [code, setCode] = useState(initialCode);
-  const [testCases, setTestCases] = useState<TestCase[]>(initialTestCases);
+  const [localTestCases, setLocalTestCases] = useState<TestCase[]>(testCases);
   const [isRunning, setIsRunning] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -28,16 +32,16 @@ export default function CodeEditor({ problemId, initialCode, testCases: initialT
     setIsRunning(true);
     
     // Update test cases to simulate running
-    const updatedTestCases = testCases.map(testCase => ({
+    const updatedTestCases = localTestCases.map(testCase => ({
       ...testCase,
       status: 'running' as const
     }));
-    setTestCases(updatedTestCases);
+    setLocalTestCases(updatedTestCases);
     
     // Simulate running code with delays for each test case
-    testCases.forEach((_, index) => {
+    localTestCases.forEach((_, index) => {
       setTimeout(() => {
-        setTestCases(prevTestCases => {
+        setLocalTestCases(prevTestCases => {
           const newTestCases = [...prevTestCases];
           // Randomly pass or fail for demo
           newTestCases[index].status = Math.random() > 0.3 ? 'passed' : 'failed';
@@ -45,7 +49,7 @@ export default function CodeEditor({ problemId, initialCode, testCases: initialT
         });
         
         // If this is the last test case, set running to false
-        if (index === testCases.length - 1) {
+        if (index === localTestCases.length - 1) {
           setIsRunning(false);
         }
       }, 1000 + (index * 500));
@@ -56,16 +60,16 @@ export default function CodeEditor({ problemId, initialCode, testCases: initialT
     setIsSubmitting(true);
     
     // Update test cases to simulate running
-    const updatedTestCases = testCases.map(testCase => ({
+    const updatedTestCases = localTestCases.map(testCase => ({
       ...testCase,
       status: 'running' as const
     }));
-    setTestCases(updatedTestCases);
+    setLocalTestCases(updatedTestCases);
     
     // Simulate submitting with delays
-    testCases.forEach((_, index) => {
+    localTestCases.forEach((_, index) => {
       setTimeout(() => {
-        setTestCases(prevTestCases => {
+        setLocalTestCases(prevTestCases => {
           const newTestCases = [...prevTestCases];
           // For submission, we'll make them all pass
           newTestCases[index].status = 'passed';
@@ -73,7 +77,7 @@ export default function CodeEditor({ problemId, initialCode, testCases: initialT
         });
         
         // If this is the last test case, set submitting to false
-        if (index === testCases.length - 1) {
+        if (index === localTestCases.length - 1) {
           setIsSubmitting(false);
         }
       }, 1000 + (index * 500));
@@ -81,7 +85,7 @@ export default function CodeEditor({ problemId, initialCode, testCases: initialT
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="h-full flex flex-col bg-white">
       {/* Options Bar */}
       <div className="bg-white p-3 border-b border-neutral-200 flex justify-between">
         <div className="flex items-center">
@@ -155,47 +159,51 @@ export default function CodeEditor({ problemId, initialCode, testCases: initialT
         <Card className="bg-neutral-100 p-4">
           <h3 className="font-medium mb-2">Test Cases</h3>
           <div className="space-y-2">
-            {testCases.map((testCase, index) => (
-              <div key={index} className="flex items-center">
-                <input 
-                  type="radio"
-                  id={`test-${index}`}
-                  name="test_case"
-                  className="mr-2"
-                  defaultChecked={index === 0}
-                />
-                <label 
-                  htmlFor={`test-${index}`} 
-                  className="text-sm flex-1"
-                >
-                  {testCase.input}
-                </label>
-                <div className="ml-auto flex items-center">
-                  {testCase.status === 'pending' && (
-                    <Code className="h-4 w-4 text-neutral-500" />
-                  )}
-                  {testCase.status === 'running' && (
-                    <Loader className="h-4 w-4 text-primary-500 animate-spin" />
-                  )}
-                  {testCase.status === 'passed' && (
-                    <CheckCircle className="h-4 w-4 text-success" />
-                  )}
-                  {testCase.status === 'failed' && (
-                    <XCircle className="h-4 w-4 text-error" />
-                  )}
-                  <span className={cn(
-                    "ml-2 text-xs",
-                    testCase.status === 'passed' && "text-success",
-                    testCase.status === 'failed' && "text-error",
-                    testCase.status === 'running' && "text-primary-500",
-                  )}>
-                    {testCase.status === 'running' ? 'Running...' : 
-                     testCase.status === 'passed' ? 'Passed' : 
-                     testCase.status === 'failed' ? 'Failed' : ''}
-                  </span>
+            {localTestCases.length > 0 ? (
+              localTestCases.map((testCase, index) => (
+                <div key={index} className="flex items-center">
+                  <input 
+                    type="radio"
+                    id={`test-${index}`}
+                    name="test_case"
+                    className="mr-2"
+                    defaultChecked={index === 0}
+                  />
+                  <label 
+                    htmlFor={`test-${index}`} 
+                    className="text-sm flex-1"
+                  >
+                    {testCase.input}
+                  </label>
+                  <div className="ml-auto flex items-center">
+                    {testCase.status === 'pending' && (
+                      <Code className="h-4 w-4 text-neutral-500" />
+                    )}
+                    {testCase.status === 'running' && (
+                      <Loader className="h-4 w-4 text-primary-500 animate-spin" />
+                    )}
+                    {testCase.status === 'passed' && (
+                      <CheckCircle className="h-4 w-4 text-success" />
+                    )}
+                    {testCase.status === 'failed' && (
+                      <XCircle className="h-4 w-4 text-error" />
+                    )}
+                    <span className={cn(
+                      "ml-2 text-xs",
+                      testCase.status === 'passed' && "text-success",
+                      testCase.status === 'failed' && "text-error",
+                      testCase.status === 'running' && "text-primary-500",
+                    )}>
+                      {testCase.status === 'running' ? 'Running...' : 
+                       testCase.status === 'passed' ? 'Passed' : 
+                       testCase.status === 'failed' ? 'Failed' : ''}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <div className="text-sm text-neutral-500">No test cases available</div>
+            )}
             <div className="flex items-center">
               <input 
                 type="radio"

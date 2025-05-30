@@ -5,7 +5,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import CodeEditor from "@/components/CodeEditor";
-import { Check, Clock, User, Tag, Bookmark, Share } from "lucide-react";
+import { Check, Clock, User, Tag, Bookmark, Share, ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Problem() {
   const { id } = useParams();
@@ -84,29 +85,49 @@ export default function Problem() {
     status: 'pending' as const
   }));
 
+  const handleGoBack = () => {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // Fallback to problems page if no history
+      window.location.href = '/problems';
+    }
+  };
+
   return (
     <div className="h-full flex flex-col">
       {/* Problem Header */}
       <div className="bg-white border-b border-neutral-200 p-4">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2">
-          <h1 className="text-xl font-semibold">{problem.title}</h1>
-          <div className="flex mt-2 sm:mt-0">
-            <Badge variant="outline" className={
-              problem.difficulty === "Easy" ? "bg-green-100 text-success border-green-200" :
-              problem.difficulty === "Medium" ? "bg-yellow-100 text-warning border-yellow-200" :
-              "bg-red-100 text-error border-red-200"
-            }>
-              {problem.difficulty}
-            </Badge>
-            <Button variant="outline" size="sm" className="ml-2">
-              <Bookmark className="h-4 w-4 mr-1" /> Save
-            </Button>
-            <Button variant="outline" size="sm" className="ml-2">
-              <Share className="h-4 w-4 mr-1" /> Share
-            </Button>
+        <div className="flex items-center mb-2">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleGoBack}
+            className="mr-3"
+          >
+            <ArrowLeft className="h-4 w-4 mr-1" />
+            Back
+          </Button>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center flex-1">
+            <h1 className="text-xl font-semibold">{problem.title}</h1>
+            <div className="flex mt-2 sm:mt-0">
+              <Badge variant="outline" className={
+                problem.difficulty === "Easy" ? "bg-green-100 text-success border-green-200" :
+                problem.difficulty === "Medium" ? "bg-yellow-100 text-warning border-yellow-200" :
+                "bg-red-100 text-error border-red-200"
+              }>
+                {problem.difficulty}
+              </Badge>
+              <Button variant="outline" size="sm" className="ml-2">
+                <Bookmark className="h-4 w-4 mr-1" /> Save
+              </Button>
+              <Button variant="outline" size="sm" className="ml-2">
+                <Share className="h-4 w-4 mr-1" /> Share
+              </Button>
+            </div>
           </div>
         </div>
-        <div className="flex flex-wrap gap-2 text-xs text-neutral-600">
+        <div className="flex flex-wrap gap-4 text-xs text-neutral-500">
           <span className="flex items-center">
             <Check className="h-3 w-3 text-success mr-1" /> {problem.acceptance} Acceptance
           </span>
@@ -125,119 +146,91 @@ export default function Problem() {
       {/* Problem Content and Code Editor */}
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
         {/* Problem Statement */}
-        <div className="w-full md:w-5/12 lg:w-1/3 p-4 bg-white border-r border-neutral-200 overflow-y-auto">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="w-full">
-              <TabsTrigger value="description" className="flex-1">Description</TabsTrigger>
-              <TabsTrigger value="solution" className="flex-1">Solution</TabsTrigger>
-              <TabsTrigger value="discussion" className="flex-1">Discussion</TabsTrigger>
+        <div className="w-full md:w-1/2 border-r border-neutral-200 overflow-y-auto">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
+            <TabsList className="grid w-full grid-cols-3 rounded-none border-b">
+              <TabsTrigger value="description">Description</TabsTrigger>
+              <TabsTrigger value="solution">Solution</TabsTrigger>
+              <TabsTrigger value="submissions">Submissions</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="description" className="mt-4">
-              <div className="prose prose-sm max-w-none">
-                <p>{problem.description}</p>
-                
-                {problem.examples.map((example, index) => (
-                  <div key={index}>
-                    <h3 className="text-lg font-semibold mt-4 mb-2">Example {index + 1}:</h3>
-                    <pre className="bg-neutral-100 p-3 rounded-md">
-                      <code>
-                        <strong>Input:</strong> {example.input}
-                        <br />
-                        <strong>Output:</strong> {example.output}
-                        {example.explanation && (
-                          <>
-                            <br />
-                            <strong>Explanation:</strong> {example.explanation}
-                          </>
-                        )}
-                      </code>
-                    </pre>
+            <div className="flex-1 overflow-y-auto">
+              <TabsContent value="description" className="p-6 mt-0">
+                <div className="prose prose-sm max-w-none">
+                  <div className="whitespace-pre-line text-neutral-700 mb-6">
+                    {problem.description}
                   </div>
-                ))}
-                
-                <h3 className="text-lg font-semibold mt-4 mb-2">Constraints:</h3>
-                <ul className="list-disc pl-5">
-                  {problem.constraints.map((constraint, index) => (
-                    <li key={index}>
-                      <code>{constraint}</code>
-                    </li>
-                  ))}
-                </ul>
-                
-                {problem.followUp && (
-                  <>
-                    <h3 className="text-lg font-semibold mt-4 mb-2">Follow-up:</h3>
-                    <p>{problem.followUp}</p>
-                  </>
-                )}
-              </div>
-              
-              <div className="mt-6 pt-6 border-t border-neutral-200">
-                <h3 className="text-lg font-semibold mb-3">Hints</h3>
-                {problem.hints.map((hint, index) => (
-                  <Card key={index} className="bg-blue-50 p-3 rounded-md mb-3">
-                    <p className="text-sm text-neutral-800">{hint}</p>
-                  </Card>
-                ))}
-                <Button variant="link" className="text-sm p-0">Show More Hints</Button>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="solution" className="mt-4">
-              <div className="prose prose-sm max-w-none">
-                <h3 className="text-lg font-semibold mb-2">Solution Approach</h3>
-                <p>{problem.solution}</p>
-                
-                <h3 className="text-lg font-semibold mt-4 mb-2">Python Code:</h3>
-                <pre className="bg-neutral-100 p-3 rounded-md">
-                  <code>
-{`def twoSum(nums, target):
-    seen = {}
-    for i, num in enumerate(nums):
-        complement = target - num
-        if complement in seen:
-            return [seen[complement], i]
-        seen[num] = i
-    return []`}
-                  </code>
-                </pre>
-                
-                <h3 className="text-lg font-semibold mt-4 mb-2">Time Complexity:</h3>
-                <p>O(n) where n is the length of the nums array.</p>
-                
-                <h3 className="text-lg font-semibold mt-4 mb-2">Space Complexity:</h3>
-                <p>O(n) for storing the hash map.</p>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="discussion" className="mt-4">
-              <div className="flex flex-col space-y-4">
-                <Card className="p-4">
-                  <h3 className="font-medium flex items-center">
-                    <User className="h-4 w-4 mr-2" />
-                    Community Discussions
-                  </h3>
-                  <p className="text-sm text-neutral-600 mt-2">
-                    Join the discussion with other developers solving this problem.
-                  </p>
-                  <Button className="mt-4 w-full">View Discussions</Button>
-                </Card>
-                
-                <div className="text-center text-sm text-neutral-500">
-                  No discussions yet. Be the first to comment!
+                  
+                  <div className="space-y-4">
+                    {problem.examples.map((example, index) => (
+                      <div key={index} className="bg-neutral-50 p-4 rounded-lg">
+                        <h4 className="font-medium mb-2">Example {index + 1}:</h4>
+                        <div className="space-y-1 text-sm font-mono">
+                          <div><strong>Input:</strong> {example.input}</div>
+                          <div><strong>Output:</strong> {example.output}</div>
+                          {example.explanation && (
+                            <div><strong>Explanation:</strong> {example.explanation}</div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="mt-6">
+                    <h4 className="font-medium mb-2">Constraints:</h4>
+                    <ul className="list-disc list-inside space-y-1 text-sm text-neutral-600">
+                      {problem.constraints.map((constraint, index) => (
+                        <li key={index}>{constraint}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  {problem.followUp && (
+                    <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                      <h4 className="font-medium text-blue-900 mb-2">Follow-up:</h4>
+                      <p className="text-sm text-blue-800">{problem.followUp}</p>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </TabsContent>
+              </TabsContent>
+              
+              <TabsContent value="solution" className="p-6 mt-0">
+                <div className="prose prose-sm max-w-none">
+                  <h3 className="text-lg font-semibold mb-4">Solution Approach</h3>
+                  <div className="whitespace-pre-line text-neutral-700 mb-6">
+                    {problem.solution}
+                  </div>
+                  
+                  {problem.hints.length > 0 && (
+                    <div className="mt-6">
+                      <h4 className="font-medium mb-2">Hints:</h4>
+                      <ul className="list-disc list-inside space-y-1 text-sm text-neutral-600">
+                        {problem.hints.map((hint, index) => (
+                          <li key={index}>{hint}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="submissions" className="p-6 mt-0">
+                <div className="text-center text-neutral-500">
+                  <p>No submissions yet. Submit your solution to see your submission history.</p>
+                </div>
+              </TabsContent>
+            </div>
           </Tabs>
         </div>
-        
+
         {/* Code Editor */}
-        <div className="w-full md:w-7/12 lg:w-2/3 flex flex-col">
+        <div className="w-full md:w-1/2 flex flex-col">
           <CodeEditor 
-            problemId={problem.id}
             initialCode={initialCode}
             testCases={testCases}
+            onSubmit={(code) => {
+              console.log("Submitted code:", code);
+            }}
           />
         </div>
       </div>

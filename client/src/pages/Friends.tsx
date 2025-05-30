@@ -13,9 +13,14 @@ import {
   MessageSquare, 
   Award,
   Code,
-  Search
+  Search,
+  TrendingUp
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import fox1Avatar from "/src/avatars/fox1.png";
+import fox3Avatar from "/src/avatars/fox3.png";
+import wolf1Avatar from "/src/avatars/wolf1.png";
+import wolf2Avatar from "/src/avatars/wolf2.png";
+import giraffe1Avatar from "/src/avatars/giraffe1.png";
 
 interface Friend {
   id: number;
@@ -45,7 +50,7 @@ export default function Friends() {
     {
       id: 1,
       username: "JavaTurtle",
-      avatar: "1518467166778-b88f373ffec7",
+      avatar: fox1Avatar,
       level: 4,
       streak: 11,
       stats: {
@@ -56,7 +61,7 @@ export default function Friends() {
     {
       id: 2,
       username: "PyOwl",
-      avatar: "1618005182384-a83a8bd57fbe",
+      avatar: wolf2Avatar,
       level: 3,
       streak: 5,
       stats: {
@@ -67,7 +72,7 @@ export default function Friends() {
     {
       id: 3,
       username: "JavaScriptCat",
-      avatar: "1514888286974-6c03e2ca1dba",
+      avatar: giraffe1Avatar,
       level: 2,
       streak: 3,
       stats: {
@@ -84,7 +89,7 @@ export default function Friends() {
       user: {
         id: 4,
         username: "BinaryPanda",
-        avatar: "1541364983171-a8ba01e95cfc",
+        avatar: fox3Avatar,
         level: 5,
         streak: 7,
         stats: {
@@ -99,7 +104,7 @@ export default function Friends() {
       user: {
         id: 5,
         username: "RapidRabbit",
-        avatar: "1530126483408-aa533e55bdb2",
+        avatar: wolf1Avatar,
         level: 6,
         streak: 14,
         stats: {
@@ -206,7 +211,7 @@ export default function Friends() {
                   <div className="flex items-center">
                     <div className="h-10 w-10 rounded-full overflow-hidden mr-3">
                       <img
-                        src={`https://images.unsplash.com/photo-${request.user.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100`}
+                        src={request.user.avatar}
                         alt={`${request.user.username} avatar`}
                         className="h-full w-full object-cover"
                       />
@@ -268,7 +273,7 @@ export default function Friends() {
                 <div className="flex items-center mb-3">
                   <div className="h-12 w-12 overflow-hidden">
                     <img
-                      src={`https://images.unsplash.com/photo-${friend.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100`}
+                      src={friend.avatar}
                       alt={`${friend.username} avatar`}
                       className="h-full w-full object-cover"
                     />
@@ -323,6 +328,159 @@ export default function Friends() {
               </Button>
             </div>
           )}
+        </CardContent>
+      </Card>
+
+      {/* Forum Section */}
+      <Card className="bg-white rounded-xl shadow-sm border border-neutral-200 mt-8">
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold text-neutral-900 mb-4">Friend Forum</h3>
+          
+          <div className="space-y-6">
+            {/* Forum Post */}
+            <div className="border border-neutral-200 rounded-lg p-4">
+              {/* Original Question */}
+              <div className="flex items-start space-x-3 mb-4">
+                <div className="h-10 w-10 overflow-hidden">
+                  <img
+                    src={fox1Avatar}
+                    alt="JavaTurtle avatar"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="text-sm font-medium text-neutral-900">JavaTurtle</span>
+                    <span className="text-xs text-neutral-500">2 hours ago</span>
+                  </div>
+                  <h4 className="text-sm font-semibold text-neutral-900 mb-2">
+                    Need help with Two Sum optimization
+                  </h4>
+                  <p className="text-sm text-neutral-700 mb-3">
+                    I solved Two Sum using nested loops but it's O(n²). I heard there's an O(n) solution using hash maps. 
+                    Can someone explain the approach? I'm struggling to understand how to track the indices.
+                  </p>
+                  <div className="flex items-center space-x-4 text-xs text-neutral-500">
+                    <button className="flex items-center space-x-1 hover:text-primary-600">
+                      <TrendingUp className="h-3 w-3" />
+                      <span>
+                        2 upvotes</span>
+                    </button>
+                    <button className="flex items-center space-x-1 hover:text-primary-600">
+                      <MessageSquare className="h-3 w-3" />
+                      <span>3 replies</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reply */}
+              <div className="ml-8 border-l-2 border-neutral-100 pl-4">
+                <div className="flex items-start space-x-3">
+                  <div className="h-8 w-8 overflow-hidden">
+                    <img
+                      src={wolf2Avatar}
+                      alt="PyOwl avatar"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-sm font-medium text-neutral-900">PyOwl</span>
+                      <span className="text-xs text-neutral-500">1 hour ago</span>
+                    </div>
+                    <p className="text-sm text-neutral-700 mb-3">
+                      Great question! The key insight is to use a dictionary to store values you've already seen. 
+                      As you iterate through the array, for each number, check if (target - current_number) exists in your dictionary. 
+                      If it does, you found your pair! If not, add the current number and its index to the dictionary.
+                    </p>
+                    <div className="flex items-center space-x-4 text-xs text-neutral-500">
+                      <button className="flex items-center space-x-1 hover:text-primary-600">
+                        <TrendingUp className="h-3 w-3" />
+                        <span>1 upvote</span>
+                      </button>
+                      <button className="flex items-center space-x-1 hover:text-primary-600">
+                        <MessageSquare className="h-3 w-3" />
+                        <span>Reply</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reply to Reply */}
+              <div className="ml-16 border-l-2 border-neutral-100 pl-4 mt-4">
+                <div className="flex items-start space-x-3">
+                  <div className="h-8 w-8 overflow-hidden">
+                    <img
+                      src={fox1Avatar}
+                      alt="JavaTurtle avatar"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-sm font-medium text-neutral-900">JavaTurtle</span>
+                      <span className="text-xs text-neutral-500">30 minutes ago</span>
+                    </div>
+                    <p className="text-sm text-neutral-700 mb-3">
+                      That makes so much sense! Thank you @PyOwl 🙏 I just implemented it and got it working. 
+                      The time complexity improvement is amazing!
+                    </p>
+                    <div className="flex items-center space-x-4 text-xs text-neutral-500">
+                      <button className="flex items-center space-x-1 hover:text-primary-600">
+                        <TrendingUp className="h-3 w-3" />
+                        <span>3 upvotes</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Another Forum Post */}
+            <div className="border border-neutral-200 rounded-lg p-4">
+              <div className="flex items-start space-x-3">
+                <div className="h-10 w-10 overflow-hidden">
+                  <img
+                    src={giraffe1Avatar}
+                    alt="JavaScriptCat avatar"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="text-sm font-medium text-neutral-900">JavaScriptCat</span>
+                    <span className="text-xs text-neutral-500">4 hours ago</span>
+                  </div>
+                  <h4 className="text-sm font-semibold text-neutral-900 mb-2">
+                    Daily coding streak tips?
+                  </h4>
+                  <p className="text-sm text-neutral-700 mb-3">
+                    I keep breaking my coding streak after 3-4 days. Any tips on maintaining consistency? 
+                    What time of day do you all prefer to solve problems?
+                  </p>
+                  <div className="flex items-center space-x-4 text-xs text-neutral-500">
+                    <button className="flex items-center space-x-1 hover:text-primary-600">
+                      <TrendingUp className="h-3 w-3" />
+                      <span>2 upvotes</span>
+                    </button>
+                    <button className="flex items-center space-x-1 hover:text-primary-600">
+                      <MessageSquare className="h-3 w-3" />
+                      <span>5 replies</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* View More Button */}
+          <div className="mt-6 text-center">
+            <Button variant="outline">
+              View All Forum Posts
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

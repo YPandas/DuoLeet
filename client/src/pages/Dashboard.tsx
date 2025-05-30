@@ -95,7 +95,7 @@ export default function Dashboard() {
   const friendActivity = [
     {
       id: 1,
-      name: "Alice Chen",
+      name: "Alice",
       avatar: fox3Avatar,
       action: "solved",
       problem: "Binary Tree Inorder Traversal",
@@ -104,7 +104,7 @@ export default function Dashboard() {
     },
     {
       id: 2,
-      name: "Bob Wilson",
+      name: "Bob",
       avatar: wolf1Avatar,
       action: "attempted",
       problem: "Merge k Sorted Lists",
@@ -113,7 +113,7 @@ export default function Dashboard() {
     },
     {
       id: 3,
-      name: "Carol Davis",
+      name: "Carol",
       avatar: wolf3Avatar,
       action: "solved",
       problem: "Valid Parentheses",
@@ -151,27 +151,41 @@ export default function Dashboard() {
       <Card className="bg-white rounded-xl shadow-sm border border-neutral-200 p-6 mb-8">
         <CardContent className="p-0">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-neutral-900">Daily Challenge</h3>
-            <span className="px-3 py-1 text-xs bg-secondary-100 text-secondary-700 rounded-full">Medium</span>
-          </div>
-          
-          <h4 className="text-xl font-bold mb-2">Longest Substring Without Repeating Characters</h4>
-          <p className="text-neutral-600 mb-4">Given a string s, find the length of the longest substring without repeating characters.</p>
-          
-          <div className="flex flex-wrap gap-2 mb-4">
-            <span className="px-2 py-1 text-xs bg-primary-100 text-primary-700 rounded-full">Strings</span>
-            <span className="px-2 py-1 text-xs bg-primary-100 text-primary-700 rounded-full">Hash Table</span>
-            <span className="px-2 py-1 text-xs bg-primary-100 text-primary-700 rounded-full">Sliding Window</span>
-          </div>
-          
-          <Button asChild>
-            <Link href="/problem/3">
-              Solve Challenge
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-primary-100 rounded-lg">
+                <Calendar className="h-6 w-6 text-primary-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-neutral-900">Today's Challenge</h3>
+                <p className="text-sm text-neutral-600">Complete your daily coding goal</p>
+              </div>
+            </div>
+            <Link href="/problem/1">
+              <Button className="bg-primary-600 hover:bg-primary-700">
+                Start Challenge
+              </Button>
             </Link>
-          </Button>
+          </div>
+          
+          <Link href="/problem/1">
+            <div className="bg-neutral-50 rounded-lg p-4 hover:bg-neutral-100 transition-colors cursor-pointer">
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="font-medium text-neutral-900">Two Sum</h4>
+                <span className="px-2 py-1 text-xs bg-green-100 text-green-700 rounded-full">Easy</span>
+              </div>
+              <p className="text-sm text-neutral-600 mb-3">
+                Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+              </p>
+              <div className="flex items-center space-x-4 text-xs text-neutral-500">
+                <span>🎯 Array, Hash Table</span>
+                <span>⏱️ ~15 min</span>
+                <span>✅ 49.1% acceptance</span>
+              </div>
+            </div>
+          </Link>
         </CardContent>
       </Card>
-      
+
       {/* Stats & Recommendations */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         <GoalProgress 
@@ -188,8 +202,8 @@ export default function Dashboard() {
           avatarUrl={user?.avatar || "/src/avatars/fox2.png"}
         />
       </div>
-      
-      {/* Recommended Problems and Friend Activity */}
+
+      {/* Recommended Problems and Recent Achievements */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Recommended Problems */}
         <Card className="bg-white rounded-xl shadow-sm">
@@ -198,81 +212,129 @@ export default function Dashboard() {
             
             <div className="space-y-4">
               {recommendedProblems.map((problem) => (
-                <div key={problem.id} className="border border-neutral-200 rounded-lg p-4 hover:border-primary-200 transition-colors">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-neutral-900">{problem.title}</h4>
-                    <span className={`px-2 py-1 text-xs rounded-full ${
-                      problem.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
-                      problem.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-red-100 text-red-700'
-                    }`}>
-                      {problem.difficulty}
-                    </span>
-                  </div>
-                  
-                  <p className="text-sm text-neutral-600 mb-3">{problem.description}</p>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-wrap gap-1">
-                      {problem.tags.map((tag) => (
-                        <span key={tag} className="px-2 py-1 text-xs bg-neutral-100 text-neutral-600 rounded">
-                          {tag}
-                        </span>
-                      ))}
+                <Link key={problem.id} href={`/problem/${problem.id}`}>
+                  <div className="border border-neutral-200 rounded-lg p-4 hover:border-primary-200 hover:bg-neutral-50 transition-colors cursor-pointer">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-medium text-neutral-900">{problem.title}</h4>
+                      <span className={`px-2 py-1 text-xs rounded-full ${
+                        problem.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
+                        problem.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-red-100 text-red-700'
+                      }`}>
+                        {problem.difficulty}
+                      </span>
                     </div>
-                    <span className="text-xs text-neutral-500">{problem.acceptance}</span>
+                    
+                    <p className="text-sm text-neutral-600 mb-3">{problem.description}</p>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-wrap gap-1">
+                        {problem.tags.map((tag) => (
+                          <span key={tag} className="px-2 py-1 text-xs bg-neutral-100 text-neutral-600 rounded">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <span className="text-xs text-neutral-500">{problem.acceptance}</span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* Friend Activity */}
+        {/* Recent Achievements */}
         <Card className="bg-white rounded-xl shadow-sm">
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Friend Activity</h3>
+            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Recent Achievements</h3>
             
-            <div className="space-y-4">
-              {friendActivity.map((activity) => (
-                <div key={activity.id} className="flex items-center space-x-3">
-                  <img 
-                    src={activity.avatar.startsWith('/') || activity.avatar.includes('blob:') ? activity.avatar : `https://images.unsplash.com/photo-${activity.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40`}
-                    alt={activity.name}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                  <div className="flex-1">
-                    <p className="text-sm">
-                      <span className="font-medium">{activity.name}</span>
-                      <span className="text-neutral-600"> {activity.action} </span>
-                      <span className="font-medium">{activity.problem}</span>
-                    </p>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <span className={`px-2 py-0.5 text-xs rounded ${
-                        activity.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
-                        activity.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
-                        'bg-red-100 text-red-700'
-                      }`}>
-                        {activity.difficulty}
-                      </span>
-                      <span className="text-xs text-neutral-500">{activity.time}</span>
-                    </div>
-                  </div>
+            <div className="flex justify-center gap-4 mb-4">
+              <Badge badge={badges[0]} size="sm" />
+              <Badge badge={badges[1]} size="sm" />
+            </div>
+
+            <div className="mb-4 p-3 bg-primary-50 rounded-lg">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold text-primary-900">Your Current Points</span>
+                <span className="text-lg font-bold text-primary-600">124</span>
+              </div>
+            </div>
+
+            {/* Points & Badges Guide */}
+            <div className="mt-6 p-4 bg-neutral-50 rounded-lg">
+              <h4 className="text-sm font-semibold text-neutral-900 mb-3">How to Earn Points & Badges</h4>
+              <div className="space-y-2 text-xs text-neutral-600">
+                <div className="flex justify-between">
+                  <span>Daily check-in</span>
+                  <span className="font-medium text-primary-600">+5 pts</span>
                 </div>
-              ))}
+                <div className="flex justify-between">
+                  <span>Solve Easy problem</span>
+                  <span className="font-medium text-green-600">+15 pts</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Solve Medium problem</span>
+                  <span className="font-medium text-yellow-600">+25 pts</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Solve Hard problem</span>
+                  <span className="font-medium text-red-600">+40 pts</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Discuss with friends</span>
+                  <span className="font-medium text-blue-600">+10 pts</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Help others (comments)</span>
+                  <span className="font-medium text-purple-600">+8 pts</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Weekly goal completion</span>
+                  <span className="font-medium text-orange-600">+50 pts</span>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-neutral-200">
+                <p className="text-xs text-neutral-500">
+                  🏆 Earn badges by reaching milestones: 5-day streaks, solving 10+ problems of each difficulty, and more!
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Recent Achievements */}
+      {/* Friend Activity */}
       <Card className="bg-white rounded-xl shadow-sm">
         <CardContent className="p-6">
-          <h3 className="text-lg font-semibold text-neutral-900 mb-4">Recent Achievements</h3>
+          <h3 className="text-lg font-semibold text-neutral-900 mb-4">Friend Activity</h3>
           
-          <div className="grid grid-cols-3 gap-4">
-            {badges.map((badge) => (
-              <Badge key={badge.id} badge={badge} size="sm" />
+          <div className="space-y-4">
+            {friendActivity.map((activity) => (
+              <div key={activity.id} className="flex items-center space-x-3">
+                <img 
+                  src={activity.avatar.startsWith('/') || activity.avatar.includes('blob:') ? activity.avatar : `https://images.unsplash.com/photo-${activity.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40`}
+                  alt={activity.name}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div className="flex-1">
+                  <p className="text-sm">
+                    <span className="font-medium">{activity.name}</span>
+                    <span className="text-neutral-600"> {activity.action} </span>
+                    <span className="font-medium">{activity.problem}</span>
+                  </p>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <span className={`px-2 py-0.5 text-xs rounded ${
+                      activity.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
+                      activity.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-red-100 text-red-700'
+                    }`}>
+                      {activity.difficulty}
+                    </span>
+                    <span className="text-xs text-neutral-500">{activity.time}</span>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </CardContent>
@@ -286,26 +348,5 @@ export default function Dashboard() {
         currentGoals={userGoals}
       />
     </div>
-  );
-}
-
-// Local component
-function User(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
-    </svg>
   );
 }

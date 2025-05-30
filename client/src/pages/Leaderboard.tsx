@@ -240,38 +240,38 @@ export default function Leaderboard() {
     {
       id: 4,
       username: "SwiftCoder",
-      avatar: "1530126483408-aa533e55bdb2",
+      avatar: "/src/avatars/wolf3.png",
       level: 8,
       streak: 21,
       problemsSolved: 245,
-      points: 5840
+      points: 250
     },
     {
       id: 5,
       username: "PandaCoder",
-      avatar: "1541364983171-a8ba01e95cfc",
+      avatar: "/src/avatars/wolf2.png",
       level: 7,
       streak: 12,
       problemsSolved: 231,
-      points: 4920
+      points: 234
     },
     {
       id: 6,
       username: "JavaMaster",
-      avatar: "1554151228-14d9def656e4",
+      avatar: "/src/avatars/fox3.png",
       level: 6,
       streak: 7,
       problemsSolved: 210,
-      points: 4200
+      points: 142
     },
     {
       id: 7,
       username: "PythonNinja",
-      avatar: "1506277886164-e25aa3f4ef7f",
+      avatar: "/src/avatars/giraffe2.png",
       level: 5,
       streak: 3,
       problemsSolved: 180,
-      points: 3600
+      points: 136
     }
   ];
 
@@ -284,7 +284,7 @@ export default function Leaderboard() {
       level: user.level,
       streak: user.streak,
       problemsSolved: 42,
-      points: 1240
+      points: 124
     });
   }
   
