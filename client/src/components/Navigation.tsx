@@ -1,18 +1,29 @@
+import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 import { 
   Home, 
-  Code2, 
+  Code, 
   User, 
   Trophy, 
   Users, 
-  X
+  X,
+  LogOut
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+
+const NAV_ITEMS = [
+  { path: "/", label: "Dashboard", icon: <Home className="h-5 w-5" /> },
+  { path: "/problems", label: "Problems", icon: <Code className="h-5 w-5" /> },
+  { path: "/leaderboard", label: "Leaderboard", icon: <Trophy className="h-5 w-5" /> },
+  { path: "/friends", label: "My Network", icon: <Users className="h-5 w-5" /> },
+  { path: "/profile", label: "My Profile", icon: <User className="h-5 w-5" /> },
+];
 
 interface NavigationProps {
   sidebarOpen: boolean;
-  setSidebarOpen: (isOpen: boolean) => void;
+  setSidebarOpen: (open: boolean) => void;
   onOpenLoginModal: () => void;
 }
 
@@ -22,20 +33,13 @@ export default function Navigation({
   onOpenLoginModal
 }: NavigationProps) {
   const [location] = useLocation();
-  const { isAuthenticated } = useAuth();
-
-  const NAV_ITEMS = [
-    { path: "/", label: "Dashboard", icon: <Home className="w-5 h-5" /> },
-    { path: "/problems", label: "Problems", icon: <Code2 className="w-5 h-5" /> },
-    { path: "/leaderboard", label: "Leaderboard", icon: <Trophy className="w-5 h-5" /> },
-    { path: "/friends", label: "Friends", icon: <Users className="w-5 h-5" /> },
-    { path: "/profile", label: "Profile", icon: <User className="w-5 h-5" /> },
-  ];
+  const { isAuthenticated, user, logout } = useAuth();
 
   const isActive = (path: string) => {
-    if (path === "/" && location === "/") return true;
-    if (path !== "/" && location.startsWith(path)) return true;
-    return false;
+    if (path === "/") {
+      return location === "/";
+    }
+    return location.startsWith(path);
   };
 
   if (!sidebarOpen) {
@@ -50,7 +54,7 @@ export default function Navigation({
         {/* Logo and Header */}
         <div className="h-16 flex items-center justify-between px-4 border-b border-neutral-200">
           <div className="flex items-center">
-            <span className="text-xl font-bold text-primary-600">DuoLeetcode</span>
+            <span className="text-xl font-bold text-primary-600">DuoLeet</span>
           </div>
           <button 
             onClick={() => setSidebarOpen(false)} 
@@ -86,19 +90,30 @@ export default function Navigation({
         
         {/* User Profile */}
         <div className="border-t border-neutral-200 p-4">
-          {isAuthenticated ? (
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <img 
-                  className="h-10 w-10 rounded-full object-contain object-center bg-white" 
-                  src="/src/avatars/fox2.png" 
-                  alt="User avatar" 
-                />
+          {isAuthenticated && user ? (
+            <div>
+              <div className="flex items-center mb-3">
+                <div className="flex-shrink-0">
+                  <img 
+                    className="h-10 w-10 rounded-full object-contain object-center bg-white" 
+                    src={user.avatar} 
+                    alt="User avatar" 
+                  />
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-neutral-700">{user.username}</p>
+                  <p className="text-xs text-neutral-500">Level {user.level} • {user.streak} day streak</p>
+                </div>
               </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-neutral-700">CodeMaster</p>
-                <p className="text-xs text-neutral-500">Level 3 • 7 day streak</p>
-              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={logout}
+                className="w-full"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign Out
+              </Button>
             </div>
           ) : (
             <button 

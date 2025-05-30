@@ -7,141 +7,115 @@ import {
   Share, 
   Flame, 
   Code, 
-  Trophy, 
-  Mail, 
-  Github, 
-  MessageSquare, 
   Calendar,
   CheckCircle,
   TrendingUp,
-  Medal
+  Clock,
+  Target
 } from "lucide-react";
 import Badge from "@/components/Badge";
 import StreakIcon from "@/components/StreakIcon";
 import EasyX10Icon from "@/components/EasyX10Icon";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Profile() {
-  const user = {
-    id: "1",
-    username: "CodeMaster",
-    name: "Alex Chen",
-    joinDate: "April 2023",
-    email: "alex.chen@example.com",
-    github: "github.com/alexchen",
-    discord: "alexc#1234",
-    avatar: "/src/avatars/fox2.png",
-    level: 3,
-    streak: 7,
-    problemsSolved: 42,
-    badgesCount: 8,
-    xp: 840,
-    nextLevelXp: 1000
+  const { user } = useAuth();
+
+  if (!user) {
+    return (
+      <div className="px-4 py-6 lg:px-8 lg:py-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-neutral-900 mb-2">Please sign in to view your profile</h2>
+        </div>
+      </div>
+    );
+  }
+
+  const stats = {
+    problemsSolved: 47,
+    totalProblems: 2000,
+    easyProblems: 25,
+    mediumProblems: 18,
+    hardProblems: 4,
+    acceptanceRate: 78.5,
+    averageTime: "15 min",
+    longestStreak: 12,
+    currentStreak: user.streak,
+    totalSubmissions: 89,
+    correctSubmissions: 47
   };
-  
-  const difficultyStats = {
-    easy: { count: 27, percentage: 60 },
-    medium: { count: 14, percentage: 30 },
-    hard: { count: 5, percentage: 10 }
-  };
-  
-  const topicStats = [
-    { name: "Arrays", solved: 18, total: 50, percentage: 36 },
-    { name: "Strings", solved: 12, total: 45, percentage: 27 },
-    { name: "Hash Table", solved: 8, total: 30, percentage: 27 }
+
+  const recentActivity = [
+    { problem: "Two Sum", difficulty: "Easy", status: "Solved", time: "2 hours ago" },
+    { problem: "Valid Parentheses", difficulty: "Easy", status: "Solved", time: "1 day ago" },
+    { problem: "Merge Two Sorted Lists", difficulty: "Easy", status: "Attempted", time: "2 days ago" },
+    { problem: "Add Two Numbers", difficulty: "Medium", status: "Solved", time: "3 days ago" },
   ];
-  
+
   const badges = [
-    {
+    { 
       id: "1",
+      name: "5-day Streak", 
       title: "5-day Streak",
-      icon: <StreakIcon className="h-5 w-5" />,
-      color: "warning",
+      color: "red-500", 
       unlocked: true,
+      icon: <Flame className="h-4 w-4" />
     },
-    {
+    { 
       id: "2",
+      name: "Easy x10", 
       title: "Easy x10",
-      icon: <EasyX10Icon className="h-5 w-5" />,
-      color: "success",
+      color: "green-500", 
       unlocked: true,
+      icon: <CheckCircle className="h-4 w-4" />
     },
-    {
+    { 
       id: "3",
+      name: "Array Master", 
       title: "Array Master",
-      icon: <Code className="h-5 w-5" />,
-      color: "primary",
+      color: "blue-500", 
       unlocked: true,
+      icon: <Code className="h-4 w-4" />
     },
-    {
+    { 
       id: "4",
+      name: "Early Bird", 
       title: "Early Bird",
-      icon: <Calendar className="h-5 w-5" />,
-      color: "secondary",
-      unlocked: true,
-    },
-    {
-      id: "5",
-      title: "Helper",
-      icon: <Medal className="h-5 w-5" />,
-      color: "accent",
-      unlocked: true,
-    },
-    {
-      id: "6",
-      title: "30-day Streak",
-      icon: <Calendar className="h-5 w-5" />,
-      color: "neutral-400",
+      color: "purple-500", 
       unlocked: false,
-    }
-  ];
-  
-  const activityHistory = [
-    {
-      id: "1",
-      type: "solved",
-      title: "You solved Two Sum",
-      time: "Today at 10:45 AM",
-      difficulty: "Easy",
-      icon: <Code className="h-5 w-5" />,
-      color: "primary"
+      icon: <Calendar className="h-4 w-4" />
     },
-    {
-      id: "2",
-      type: "solved",
-      title: "You solved Valid Parentheses",
-      time: "Today at 9:15 AM",
-      difficulty: "Easy",
-      icon: <Code className="h-5 w-5" />,
-      color: "primary"
-    },
-    {
-      id: "3",
-      type: "streak",
-      title: "10-day streak achieved!",
-      time: "Yesterday at 8:30 PM",
-      xp: "+100 XP",
-      icon: <TrendingUp className="h-5 w-5" />,
-      color: "secondary"
-    },
-    {
-      id: "4",
-      type: "badge",
-      title: "Badge earned: Array Master",
-      time: "Yesterday at 6:20 PM",
-      xp: "+50 XP",
-      icon: <Medal className="h-5 w-5" />,
-      color: "accent"
-    },
-    {
+    { 
       id: "5",
-      type: "goal",
-      title: "Daily goal completed: Solve 3 problems",
-      time: "Yesterday at 6:00 PM",
-      xp: "+30 XP",
-      icon: <CheckCircle className="h-5 w-5" />,
-      color: "success"
-    }
+      name: "Speed Demon", 
+      title: "Speed Demon",
+      color: "red-500", 
+      unlocked: false,
+      icon: <TrendingUp className="h-4 w-4" />
+    },
+    { 
+      id: "6",
+      name: "Consistency King", 
+      title: "Consistency King",
+      color: "indigo-500", 
+      unlocked: false,
+      icon: <Target className="h-4 w-4" />
+    },
   ];
+
+  const avatarProgress = {
+    level: 1,
+    currentXP: 10,
+    nextLevelXP: 100,
+    accessories: [
+      { name: "Coding Glasses", unlocked: true, icon: "👓" },
+      { name: "Dev Hat", unlocked: true, icon: "🎩" },
+      { name: "Lucky Scarf", unlocked: false, icon: "🧣" },
+      { name: "Power Gloves", unlocked: false, icon: "🧤" },
+      { name: "Wizard Cape", unlocked: false, icon: "🦸" },
+      { name: "Crown of Code", unlocked: false, icon: "👑" }
+    ]
+  };
 
   return (
     <div className="px-4 py-6 lg:px-8 lg:py-8">
@@ -159,27 +133,18 @@ export default function Profile() {
           </div>
           
           <div className="flex-1 text-center md:text-left">
-            <h2 className="text-2xl font-bold text-neutral-900">{user.username}</h2>
-            <p className="text-neutral-500 mb-4">Joined {user.joinDate}</p>
+            <h1 className="text-3xl font-bold text-neutral-900 mb-2">{user.username}</h1>
+            <p className="text-neutral-600 mb-4">Level {user.level} Coder • {user.streak} day streak 🔥</p>
             
-            <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-4">
-              <div className="px-3 py-1 bg-primary-50 text-primary-700 rounded-full flex items-center">
-                <Flame className="text-secondary-500 mr-2 streak-flame h-4 w-4" />
-                <span>{user.streak} day streak</span>
-              </div>
-              
-              <div className="px-3 py-1 bg-neutral-50 text-neutral-700 rounded-full flex items-center">
-                <Code className="text-primary-500 mr-2 h-4 w-4" />
-                <span>{user.problemsSolved} problems solved</span>
-              </div>
-              
-              <div className="px-3 py-1 bg-neutral-50 text-neutral-700 rounded-full flex items-center">
-                <Trophy className="text-secondary-500 mr-2 h-4 w-4" />
-                <span>{user.badgesCount} badges</span>
-              </div>
+            <div className="flex flex-wrap gap-2 mb-4 justify-center md:justify-start">
+              {badges.filter(badge => badge.unlocked).map((badge, index) => (
+                <Badge key={index} className={badge.color}>
+                  {badge.name}
+                </Badge>
+              ))}
             </div>
             
-            <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
               <Button>
                 <Edit className="mr-2 h-4 w-4" /> Edit Profile
               </Button>
@@ -193,6 +158,61 @@ export default function Profile() {
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Avatar Progress */}
+        <Card className="bg-white rounded-xl shadow-sm">
+          <CardContent className="p-6">
+            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Avatar Progress</h3>
+            
+            <div className="text-center mb-6">
+              <div className="relative inline-block">
+                <img 
+                  src={user.avatar} 
+                  alt="User avatar" 
+                  className="w-24 h-24 rounded-full border-4 border-primary-100 object-contain bg-white object-center mx-auto" 
+                />
+                <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary-500 border-4 border-white flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">{avatarProgress.level}</span>
+                </div>
+              </div>
+              
+              <div className="mt-4">
+                <h4 className="font-semibold text-neutral-900">Level {avatarProgress.level}</h4>
+                <p className="text-sm text-neutral-600 mb-3">
+                  {avatarProgress.currentXP}/{avatarProgress.nextLevelXP} XP to Level {avatarProgress.level + 1}
+                </p>
+                <Progress 
+                  value={(avatarProgress.currentXP / avatarProgress.nextLevelXP) * 100} 
+                  className="h-3"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="font-medium text-neutral-900 mb-3">Accessories</h4>
+              <div className="grid grid-cols-2 gap-2">
+                {avatarProgress.accessories.map((accessory, index) => (
+                  <div 
+                    key={index}
+                    className={`p-3 rounded-lg border text-center ${
+                      accessory.unlocked 
+                        ? 'border-green-200 bg-green-50' 
+                        : 'border-neutral-200 bg-neutral-50 opacity-60'
+                    }`}
+                  >
+                    <div className="text-lg mb-1">{accessory.icon}</div>
+                    <div className="text-xs font-medium text-neutral-700">{accessory.name}</div>
+                    <div className={`text-xs mt-1 ${
+                      accessory.unlocked ? 'text-green-600' : 'text-neutral-500'
+                    }`}>
+                      {accessory.unlocked ? 'Unlocked' : 'Locked'}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Stats Summary */}
         <Card className="bg-white rounded-xl shadow-sm">
           <CardContent className="p-6">
@@ -201,171 +221,99 @@ export default function Profile() {
             <div className="space-y-4">
               <div className="flex justify-between mb-1">
                 <span className="text-sm text-neutral-600">Problems Solved</span>
-                <span className="text-sm font-medium">{user.problemsSolved}/2000</span>
+                <span className="text-sm font-medium">{stats.problemsSolved}/{stats.totalProblems}</span>
               </div>
-              <div className="grid grid-cols-3 gap-2">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-neutral-500">Easy</span>
-                    <span className="text-xs font-medium text-success">{difficultyStats.easy.count}</span>
-                  </div>
-                  <div className="w-full bg-neutral-200 rounded-full h-1.5 mt-1">
-                    <div className="bg-success h-1.5 rounded-full" style={{ width: `${difficultyStats.easy.percentage}%` }}></div>
-                  </div>
+              <Progress value={(stats.problemsSolved / stats.totalProblems) * 100} className="h-2" />
+              
+              <div className="grid grid-cols-3 gap-4 mt-4">
+                <div className="text-center">
+                  <div className="text-lg font-bold text-green-600">{stats.easyProblems}</div>
+                  <div className="text-xs text-neutral-500">Easy</div>
                 </div>
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-neutral-500">Medium</span>
-                    <span className="text-xs font-medium text-warning">{difficultyStats.medium.count}</span>
-                  </div>
-                  <div className="w-full bg-neutral-200 rounded-full h-1.5 mt-1">
-                    <div className="bg-warning h-1.5 rounded-full" style={{ width: `${difficultyStats.medium.percentage}%` }}></div>
-                  </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-yellow-600">{stats.mediumProblems}</div>
+                  <div className="text-xs text-neutral-500">Medium</div>
                 </div>
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-neutral-500">Hard</span>
-                    <span className="text-xs font-medium text-error">{difficultyStats.hard.count}</span>
-                  </div>
-                  <div className="w-full bg-neutral-200 rounded-full h-1.5 mt-1">
-                    <div className="bg-error h-1.5 rounded-full" style={{ width: `${difficultyStats.hard.percentage}%` }}></div>
-                  </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-red-600">{stats.hardProblems}</div>
+                  <div className="text-xs text-neutral-500">Hard</div>
                 </div>
               </div>
-            </div>
-            
-            <hr className="my-4 border-neutral-200" />
-            
-            <div className="space-y-4">
-              <h4 className="font-medium text-neutral-900">Topics Mastered</h4>
               
-              <div className="space-y-2">
-                {topicStats.map((topic, index) => (
-                  <div key={index}>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-neutral-600">{topic.name}</span>
-                      <span className="text-sm font-medium">{topic.solved}/{topic.total}</span>
-                    </div>
-                    <div className="w-full bg-neutral-200 rounded-full h-2 mt-1">
-                      <div className="bg-primary h-2 rounded-full" style={{ width: `${topic.percentage}%` }}></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        {/* Avatar Progression */}
-        <Card className="bg-white rounded-xl shadow-sm">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Avatar Progress</h3>
-            
-            <div className="flex flex-col items-center">
-              <img 
-                src={user.avatar} 
-                alt="User avatar" 
-                className="w-40 h-40 rounded-lg object-contain mb-4" 
-              />
-              
-              <div className="w-full bg-neutral-200 rounded-full h-2.5 mb-2">
-                <div 
-                  className="bg-primary h-2.5 rounded-full" 
-                  style={{ width: `${(user.xp / user.nextLevelXp) * 100}%` }}
-                ></div>
-              </div>
-              <p className="text-sm text-neutral-500 mb-4">
-                Level {user.level} ({user.xp}/{user.nextLevelXp} XP to Level {user.level + 1})
-              </p>
-              
-              <div className="grid grid-cols-3 gap-4 w-full">
-                <div className="bg-neutral-50 rounded-lg p-2 flex flex-col items-center border border-neutral-200">
-                  <div className="w-12 h-12 flex items-center justify-center mb-2">
-                    <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                    </svg>
-                  </div>
-                  <span className="text-xs text-neutral-700 text-center">Coding Glasses</span>
-                  <span className="text-xs text-success">Unlocked</span>
+              <div className="pt-4 border-t border-neutral-200">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-neutral-600 flex items-center">
+                    <CheckCircle className="h-4 w-4 mr-1" />
+                    Acceptance Rate
+                  </span>
+                  <span className="text-sm font-medium">{stats.acceptanceRate}%</span>
                 </div>
                 
-                <div className="bg-neutral-50 rounded-lg p-2 flex flex-col items-center border border-neutral-200">
-                  <div className="w-12 h-12 flex items-center justify-center mb-2">
-                    <svg className="w-8 h-8 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
-                    </svg>
-                  </div>
-                  <span className="text-xs text-neutral-700 text-center">Dev Hat</span>
-                  <span className="text-xs text-success">Unlocked</span>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-neutral-600 flex items-center">
+                    <Clock className="h-4 w-4 mr-1" />
+                    Avg. Time
+                  </span>
+                  <span className="text-sm font-medium">{stats.averageTime}</span>
                 </div>
                 
-                <div className="bg-neutral-50 rounded-lg p-2 flex flex-col items-center border border-neutral-200 opacity-50">
-                  <div className="w-12 h-12 flex items-center justify-center mb-2">
-                    <svg className="w-8 h-8 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <span className="text-xs text-neutral-700 text-center">Laptop</span>
-                  <span className="text-xs text-neutral-500">Level 5</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-neutral-600 flex items-center">
+                    <TrendingUp className="h-4 w-4 mr-1" />
+                    Longest Streak
+                  </span>
+                  <span className="text-sm font-medium">{stats.longestStreak} days</span>
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
-        
-        {/* Badges & Achievements */}
+
+        {/* Achievements */}
         <Card className="bg-white rounded-xl shadow-sm">
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Badges & Achievements</h3>
+            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Achievements</h3>
             
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               {badges.map((badge) => (
-                <Badge key={badge.id} badge={badge} />
+                <Badge key={badge.id} badge={badge} size="md" />
               ))}
             </div>
-            
-            <Button variant="outline" className="mt-4 w-full">
-              View All Badges
-            </Button>
           </CardContent>
         </Card>
       </div>
       
-      {/* Activity History */}
-      <Card className="bg-white rounded-xl shadow-sm border border-neutral-200 p-6 mt-8">
-        <h3 className="text-lg font-semibold text-neutral-900 mb-4">Activity History</h3>
-        
-        <div className="space-y-4">
-          {activityHistory.map((activity) => (
-            <div 
-              key={activity.id} 
-              className={`flex items-start border-l-4 pl-4 py-2 border-${activity.color}`}
-            >
-              <div className={`bg-${activity.color}-50 p-2 rounded-lg mr-3`}>
-                {activity.icon}
-              </div>
-              <div>
-                <p className="font-medium">
-                  {activity.type === "solved" ? (
-                    <>
-                      {activity.title.split("You solved ")[0]}
-                      <span className="text-primary">
-                        {activity.title.split("You solved ")[1]}
-                      </span>
-                    </>
-                  ) : activity.title}
-                </p>
-                <p className="text-sm text-neutral-500">
-                  {activity.time} • {activity.difficulty || activity.xp}
-                </p>
-              </div>
-            </div>
-          ))}
+      {/* Recent Activity - moved below the 3-column grid */}
+      <Card className="bg-white rounded-xl shadow-sm mt-8">
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold text-neutral-900 mb-4">Recent Activity</h3>
           
-          <Button variant="outline" className="w-full">
-            Load More Activity
-          </Button>
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            {recentActivity.map((activity, index) => (
+              <div key={index} className="flex flex-col p-3 rounded-lg bg-neutral-50">
+                <div className="font-medium text-sm mb-2">{activity.problem}</div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge 
+                    variant="outline" 
+                    className={`text-xs ${
+                      activity.difficulty === 'Easy' ? 'border-green-200 text-green-700' :
+                      activity.difficulty === 'Medium' ? 'border-yellow-200 text-yellow-700' :
+                      'border-red-200 text-red-700'
+                    }`}
+                  >
+                    {activity.difficulty}
+                  </Badge>
+                  <span className={`text-xs ${
+                    activity.status === 'Solved' ? 'text-green-600' : 'text-yellow-600'
+                  }`}>
+                    {activity.status}
+                  </span>
+                </div>
+                <div className="text-xs text-neutral-500 mt-auto">{activity.time}</div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
       </Card>
     </div>
   );

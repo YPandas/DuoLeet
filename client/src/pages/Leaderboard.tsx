@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Crown, Medal, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface LeaderboardUser {
   id: number;
@@ -205,6 +206,7 @@ export default function Leaderboard() {
   const [leaderboardType, setLeaderboardType] = useState<"global" | "friends">("global");
   const [timeframe, setTimeframe] = useState("week");
   const [sortBy, setSortBy] = useState("problems");
+  const { user } = useAuth();
   
   // Mock data for the leaderboard
   const mockUsers: LeaderboardUser[] = [
@@ -270,17 +272,21 @@ export default function Leaderboard() {
       streak: 3,
       problemsSolved: 180,
       points: 3600
-    },
-    {
-      id: 42,
-      username: "CodeMaster",
-      avatar: "1500479694472-551d1fb6258d",
-      level: 3,
-      streak: 7,
-      problemsSolved: 42,
-      points: 1240
     }
   ];
+
+  // Add current user to the leaderboard if authenticated
+  if (user) {
+    mockUsers.push({
+      id: 42,
+      username: user.username,
+      avatar: user.avatar,
+      level: user.level,
+      streak: user.streak,
+      problemsSolved: 42,
+      points: 1240
+    });
+  }
   
   // In a real app, this would fetch from the API
   const { data: leaderboardData } = useQuery({

@@ -12,33 +12,31 @@ import Friends from "@/pages/Friends";
 import LoginModal from "@/modals/LoginModal";
 import OnboardingModal from "@/modals/OnboardingModal";
 import AppLayout from "@/layouts/AppLayout";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
-function App() {
+function AppContent() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const { toast } = useToast();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    // Check if this is the first visit to show the login/onboarding if needed
-    const hasVisited = localStorage.getItem("hasVisited");
-    if (!hasVisited) {
-      // Set a timeout to not immediately show modals
+    // Always show login modal on app start if not authenticated
+    if (!isAuthenticated) {
       const timer = setTimeout(() => {
         setShowLoginModal(true);
-      }, 1000);
-      localStorage.setItem("hasVisited", "true");
+      }, 500);
       
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [isAuthenticated]);
 
   const handleLogin = () => {
     setShowLoginModal(false);
     toast({
       title: "Logged in successfully",
-      description: "Welcome back to DuoLeetcode!",
+      description: "Welcome back to DuoLeet!",
     });
   };
 
@@ -51,40 +49,49 @@ function App() {
     setShowOnboarding(false);
     toast({
       title: "Account created successfully",
-      description: "Welcome to DuoLeetcode!",
+      description: "Welcome to DuoLeet!",
     });
   };
 
   return (
+    <TooltipProvider>
+      <AppLayout 
+        onOpenLoginModal={() => setShowLoginModal(true)}
+        onOpenOnboarding={() => setShowOnboarding(true)}
+      >
+        <Switch>
+          <Route path="/" component={Dashboard} />
+          <Route path="/problems" component={Problems} />
+          <Route path="/problem/:id" component={Problem} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/leaderboard" component={Leaderboard} />
+          <Route path="/friends" component={Friends} />
+          <Route component={NotFound} />
+        </Switch>
+      </AppLayout>
+
+      <LoginModal 
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLogin={handleLogin}
+        onSignup={handleSignup}
+      />
+
+      <OnboardingModal 
+        isOpen={showOnboarding}
+        onClose={() => setShowOnboarding(false)}
+        onComplete={handleOnboardingComplete}
+      />
+
+      <Toaster />
+    </TooltipProvider>
+  );
+}
+
+function App() {
+  return (
     <AuthProvider>
-      <TooltipProvider>
-        <LoginModal 
-          isOpen={showLoginModal} 
-          onClose={() => setShowLoginModal(false)}
-          onLogin={handleLogin}
-          onSignup={handleSignup}
-        />
-        <OnboardingModal
-          isOpen={showOnboarding}
-          onClose={() => setShowOnboarding(false)}
-          onComplete={handleOnboardingComplete}
-        />
-        <Toaster />
-        <AppLayout 
-          onOpenLoginModal={() => setShowLoginModal(true)}
-          onOpenOnboarding={() => setShowOnboarding(true)}
-        >
-          <Switch>
-            <Route path="/" component={Dashboard} />
-            <Route path="/problems" component={Problems} />
-            <Route path="/problem/:id" component={Problem} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/leaderboard" component={Leaderboard} />
-            <Route path="/friends" component={Friends} />
-            <Route component={NotFound} />
-          </Switch>
-        </AppLayout>
-      </TooltipProvider>
+      <AppContent />
     </AuthProvider>
   );
 }

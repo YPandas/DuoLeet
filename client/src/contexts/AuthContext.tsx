@@ -1,80 +1,67 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+
+interface User {
+  username: string;
+  avatar: string;
+  level: number;
+  xp: number;
+  streak: number;
+}
 
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, username: string) => Promise<void>;
+  signup: (userData: { username: string; avatar: string; email: string; password: string }) => Promise<void>;
   logout: () => void;
-}
-
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  avatar: string;
-  level: number;
-  streak: number;
-  xp: number;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
 
-  // Check if user is already logged in from localStorage
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    // Check if user data exists in localStorage
+    const userData = localStorage.getItem('userData');
+    const authStatus = localStorage.getItem('isAuthenticated');
+    
+    if (userData && authStatus === 'true') {
+      setUser(JSON.parse(userData));
       setIsAuthenticated(true);
     }
   }, []);
 
   const login = async (email: string, password: string) => {
-    // For demo purposes, we'll just simulate a login
-    const mockUser: User = {
-      id: "1",
-      username: "CodeMaster",
-      email,
-      avatar: "https://images.unsplash.com/photo-1500479694472-551d1fb6258d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
-      level: 3,
-      streak: 7,
-      xp: 840
-    };
-    
-    // Store in localStorage for persistence
-    localStorage.setItem("user", JSON.stringify(mockUser));
-    
-    setUser(mockUser);
+    // For demo purposes, we'll just set authenticated
+    // In a real app, you'd validate credentials
     setIsAuthenticated(true);
+    localStorage.setItem('isAuthenticated', 'true');
   };
 
-  const signup = async (email: string, password: string, username: string) => {
-    // For demo purposes, we'll just simulate a signup
-    const mockUser: User = {
-      id: "1",
-      username,
-      email,
-      avatar: "https://images.unsplash.com/photo-1500479694472-551d1fb6258d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+  const signup = async (userData: { username: string; avatar: string; email: string; password: string }) => {
+    const newUser: User = {
+      username: userData.username,
+      avatar: userData.avatar,
       level: 1,
-      streak: 0,
-      xp: 0
+      xp: 10,
+      streak: 5
     };
     
-    // Store in localStorage for persistence
-    localStorage.setItem("user", JSON.stringify(mockUser));
-    
-    setUser(mockUser);
+    setUser(newUser);
     setIsAuthenticated(true);
+    
+    // Store in localStorage
+    localStorage.setItem('userData', JSON.stringify(newUser));
+    localStorage.setItem('isAuthenticated', 'true');
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
     setIsAuthenticated(false);
+    setUser(null);
+    localStorage.removeItem('userData');
+    localStorage.removeItem('isAuthenticated');
   };
 
   return (

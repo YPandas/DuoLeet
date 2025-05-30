@@ -7,7 +7,7 @@ import {
   GraduationCap, 
   Glasses, 
   Rocket, 
-  LockIcon 
+  Lock as LockIcon 
 } from "lucide-react";
 
 interface AvatarAccessory {

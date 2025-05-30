@@ -33,7 +33,7 @@ export default function LoginModal({ isOpen, onClose, onLogin, onSignup }: Login
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center">Sign in to DuoLeetcode</DialogTitle>
+          <DialogTitle className="text-center">Sign in to DuoLeet</DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -75,6 +75,18 @@ export default function LoginModal({ isOpen, onClose, onLogin, onSignup }: Login
           </div>
           
           <Button type="submit" className="w-full">Sign in</Button>
+          
+          <div className="text-center">
+            <span className="text-sm text-neutral-600">Don't have an account? </span>
+            <Button 
+              type="button"
+              variant="link" 
+              className="text-sm px-0"
+              onClick={onSignup}
+            >
+              Sign up
+            </Button>
+          </div>
         </form>
         
         <div className="relative my-4">
@@ -98,23 +110,6 @@ export default function LoginModal({ isOpen, onClose, onLogin, onSignup }: Login
             <FaGoogle className="mr-2 h-4 w-4" />
             Google
           </Button>
-        </div>
-        
-        <div className="text-center text-sm">
-          <p className="text-neutral-500">
-            Don't have an account?{" "}
-            <Button 
-              variant="link" 
-              onClick={(e) => {
-                e.preventDefault();
-                onClose();
-                onSignup();
-              }} 
-              className="px-0"
-            >
-              Sign up
-            </Button>
-          </p>
         </div>
       </DialogContent>
     </Dialog>

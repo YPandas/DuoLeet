@@ -7,9 +7,12 @@ import UserAvatar from "@/components/UserAvatar";
 import Badge from "@/components/Badge";
 import StreakIcon from "@/components/StreakIcon";
 import EasyX10Icon from "@/components/EasyX10Icon";
-import { Calendar, Flag, Code, CheckCircle, TrendingUp, Medal } from "lucide-react";
+import { Calendar, Flag, Code, CheckCircle, TrendingUp, Medal, Flame } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Dashboard() {
+  const { user } = useAuth();
+  
   const lastTwoWeeks = [
     true, true, true, true, true, true, true,
     true, true, true, true, true, false, false
@@ -42,104 +45,108 @@ export default function Dashboard() {
   const badges = [
     {
       id: "1",
+      name: "5-day Streak",
       title: "5-day Streak",
-      icon: <StreakIcon className="h-5 w-5" />,
-      color: "warning",
+      icon: <Flame className="h-5 w-5" />,
+      color: "yellow-500",
       unlocked: true,
     },
     {
       id: "2",
+      name: "Easy x10", 
       title: "Easy x10",
-      icon: <EasyX10Icon className="h-5 w-5" />,
-      color: "success",
+      icon: <CheckCircle className="h-5 w-5" />,
+      color: "green-500",
       unlocked: true,
     },
     {
       id: "3",
-      title: "Array Pro",
+      name: "Array Master",
+      title: "Array Master", 
       icon: <Code className="h-5 w-5" />,
-      color: "primary",
+      color: "blue-500",
       unlocked: true,
-    },
-    {
-      id: "4",
-      title: "Early Bird",
-      icon: <Calendar className="h-5 w-5" />,
-      color: "secondary",
-      unlocked: true,
-    },
-    {
-      id: "5",
-      title: "Helper",
-      icon: <Medal className="h-5 w-5" />,
-      color: "accent",
-      unlocked: true,
-    },
-    {
-      id: "6",
-      title: "Locked",
-      icon: <CheckCircle className="h-5 w-5" />,
-      color: "neutral-400",
-      unlocked: false,
     }
   ];
 
+  const recommendedProblems = [
+    {
+      id: 1,
+      title: "Two Sum",
+      difficulty: "Easy",
+      tags: ["Array", "Hash Table"],
+      acceptance: "49.1%",
+      description: "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target."
+    },
+    {
+      id: 2,
+      title: "Add Two Numbers",
+      difficulty: "Medium",
+      tags: ["Linked List", "Math"],
+      acceptance: "38.4%",
+      description: "You are given two non-empty linked lists representing two non-negative integers."
+    },
+    {
+      id: 3,
+      title: "Longest Substring Without Repeating Characters",
+      difficulty: "Medium",
+      tags: ["Hash Table", "String", "Sliding Window"],
+      acceptance: "33.8%",
+      description: "Given a string s, find the length of the longest substring without repeating characters."
+    }
+  ];
+
+  const friendActivity = [
+    {
+      id: 1,
+      name: "Alice Chen",
+      avatar: "1544005365-5e9d0025ebb8",
+      action: "solved",
+      problem: "Binary Tree Inorder Traversal",
+      difficulty: "Easy",
+      time: "2 hours ago"
+    },
+    {
+      id: 2,
+      name: "Bob Wilson",
+      avatar: "1507003211-a716c11229a6",
+      action: "attempted",
+      problem: "Merge k Sorted Lists",
+      difficulty: "Hard",
+      time: "4 hours ago"
+    },
+    {
+      id: 3,
+      name: "Carol Davis",
+      avatar: "1494790108-ea896e356960",
+      action: "solved",
+      problem: "Valid Parentheses",
+      difficulty: "Easy",
+      time: "6 hours ago"
+    }
+  ];
+
+  if (!user) {
+    return (
+      <div className="px-4 py-6 lg:px-8 lg:py-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-neutral-900 mb-2">Welcome to DuoLeet!</h2>
+          <p className="text-neutral-600 mb-4">Please sign in to start your coding journey.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="px-4 py-6 lg:px-8 lg:py-8">
-      {/* Welcome Section */}
+      {/* Welcome Header */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-neutral-900 mb-2">Welcome to DuoLeetcode!</h2>
-        <p className="text-neutral-600">Your personal coding practice companion.</p>
+        <h1 className="text-3xl font-bold text-neutral-900 mb-2">
+          Welcome, {user.username}! 👋
+        </h1>
+        <p className="text-neutral-600">Ready to tackle some coding challenges today?</p>
       </div>
-      
-      {/* Get Started Guide */}
-      <Card className="bg-white rounded-xl shadow-sm border border-neutral-200 p-6 mb-8">
-        <CardContent className="p-0">
-          <h3 className="text-lg font-semibold text-neutral-900 mb-4">Get Started</h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="flex flex-col items-center text-center p-4 rounded-lg bg-neutral-50">
-              <div className="w-12 h-12 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mb-3">
-                <User className="h-5 w-5" />
-              </div>
-              <h4 className="font-medium text-neutral-900 mb-2">Create Account</h4>
-              <p className="text-sm text-neutral-600">Sign up and choose your coding companion avatar.</p>
-              <Button className="mt-4">
-                Create Account
-              </Button>
-            </div>
-            
-            <div className="flex flex-col items-center text-center p-4 rounded-lg bg-neutral-50">
-              <div className="w-12 h-12 rounded-full bg-secondary-100 text-secondary-600 flex items-center justify-center mb-3">
-                <Flag className="h-5 w-5" />
-              </div>
-              <h4 className="font-medium text-neutral-900 mb-2">Set Goals</h4>
-              <p className="text-sm text-neutral-600">Define your weekly coding practice goals to stay motivated.</p>
-              <Button variant="secondary" className="mt-4">
-                Set Goals
-              </Button>
-            </div>
-            
-            <div className="flex flex-col items-center text-center p-4 rounded-lg bg-neutral-50">
-              <div className="w-12 h-12 rounded-full bg-success-100 text-success flex items-center justify-center mb-3">
-                <Code className="h-5 w-5" />
-              </div>
-              <h4 className="font-medium text-neutral-900 mb-2">Solve Problems</h4>
-              <p className="text-sm text-neutral-600">Start solving problems and track your progress.</p>
-              <Button 
-                variant="success" 
-                asChild 
-                className="mt-4 bg-success hover:bg-success/90"
-              >
-                <Link href="/problems">
-                  Browse Problems
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-      
+
       {/* Daily Challenge */}
       <Card className="bg-white rounded-xl shadow-sm border border-neutral-200 p-6 mb-8">
         <CardContent className="p-0">
@@ -167,89 +174,107 @@ export default function Dashboard() {
       
       {/* Stats & Recommendations */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-        <Streak currentStreak={12} lastTwoWeeks={lastTwoWeeks} />
+        <Streak currentStreak={user?.streak || 0} lastTwoWeeks={lastTwoWeeks} />
         <GoalProgress goals={goals} onEdit={() => {}} />
         <UserAvatar 
-          name="CodeMaster"
-          level={3}
-          xp={840}
-          xpRequired={1000}
-          streak={7}
-          avatarUrl="/src/avatars/fox2.png"
+          name={user?.username || "Guest"}
+          level={user?.level || 1}
+          xp={10}
+          xpRequired={100}
+          streak={user?.streak || 0}
+          avatarUrl={user?.avatar || "/src/avatars/fox2.png"}
           onCustomize={() => {}}
         />
       </div>
       
       {/* Recommended Problems and Friend Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Recommended Problems */}
-        <div className="lg:col-span-2">
-          <Card className="bg-white rounded-xl shadow-sm border border-neutral-200">
-            <CardContent className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-neutral-900">Recommended Problems</h3>
-                <Button variant="link" className="text-primary">View More</Button>
-              </div>
-              
-              <div className="space-y-3">
-                <div className="border border-neutral-200 rounded-lg p-4 hover:border-primary hover:shadow-sm transition-all">
-                  <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-medium">Two Sum</h4>
-                    <span className="px-2 py-1 bg-green-100 text-success text-xs rounded-full">Easy</span>
+        <Card className="bg-white rounded-xl shadow-sm">
+          <CardContent className="p-6">
+            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Recommended for You</h3>
+            
+            <div className="space-y-4">
+              {recommendedProblems.map((problem) => (
+                <div key={problem.id} className="border border-neutral-200 rounded-lg p-4 hover:border-primary-200 transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-neutral-900">{problem.title}</h4>
+                    <span className={`px-2 py-1 text-xs rounded-full ${
+                      problem.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
+                      problem.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-red-100 text-red-700'
+                    }`}>
+                      {problem.difficulty}
+                    </span>
                   </div>
-                  <p className="text-sm text-neutral-600 mb-3">Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.</p>
-                  <div className="flex items-center text-xs text-neutral-500">
-                    <span className="flex items-center mr-3"><CheckCircle className="h-3 w-3 text-success mr-1" /> 85% Acceptance</span>
-                    <span className="flex items-center"><Code className="h-3 w-3 mr-1" /> Arrays</span>
-                  </div>
-                </div>
-                
-                <div className="border border-neutral-200 rounded-lg p-4 hover:border-primary hover:shadow-sm transition-all">
-                  <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-medium">Merge Two Sorted Lists</h4>
-                    <span className="px-2 py-1 bg-green-100 text-success text-xs rounded-full">Easy</span>
-                  </div>
-                  <p className="text-sm text-neutral-600 mb-3">Merge two sorted linked lists and return it as a sorted list.</p>
-                  <div className="flex items-center text-xs text-neutral-500">
-                    <span className="flex items-center mr-3"><CheckCircle className="h-3 w-3 text-success mr-1" /> 79% Acceptance</span>
-                    <span className="flex items-center"><Code className="h-3 w-3 mr-1" /> Linked List</span>
-                  </div>
-                </div>
-                
-                <div className="border border-neutral-200 rounded-lg p-4 hover:border-primary hover:shadow-sm transition-all">
-                  <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-medium">Valid Parentheses</h4>
-                    <span className="px-2 py-1 bg-green-100 text-success text-xs rounded-full">Easy</span>
-                  </div>
-                  <p className="text-sm text-neutral-600 mb-3">Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.</p>
-                  <div className="flex items-center text-xs text-neutral-500">
-                    <span className="flex items-center mr-3"><CheckCircle className="h-3 w-3 text-success mr-1" /> 80% Acceptance</span>
-                    <span className="flex items-center"><Code className="h-3 w-3 mr-1" /> Stack</span>
+                  
+                  <p className="text-sm text-neutral-600 mb-3">{problem.description}</p>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap gap-1">
+                      {problem.tags.map((tag) => (
+                        <span key={tag} className="px-2 py-1 text-xs bg-neutral-100 text-neutral-600 rounded">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="text-xs text-neutral-500">{problem.acceptance}</span>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        
-        {/* Recent Achievements */}
-        <div>
-          <Card className="bg-white rounded-xl shadow-sm border border-neutral-200">
-            <CardContent className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-neutral-900">Achievements</h3>
-                <Button variant="link" className="text-primary">View All</Button>
-              </div>
-              
-              <div className="grid grid-cols-3 gap-4">
-                {badges.map((badge) => (
-                  <Badge key={badge.id} badge={badge} />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Friend Activity */}
+        <Card className="bg-white rounded-xl shadow-sm">
+          <CardContent className="p-6">
+            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Friend Activity</h3>
+            
+            <div className="space-y-4">
+              {friendActivity.map((activity) => (
+                <div key={activity.id} className="flex items-center space-x-3">
+                  <img 
+                    src={`https://images.unsplash.com/photo-${activity.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40`}
+                    alt={activity.name}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm">
+                      <span className="font-medium">{activity.name}</span>
+                      <span className="text-neutral-600"> {activity.action} </span>
+                      <span className="font-medium">{activity.problem}</span>
+                    </p>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <span className={`px-2 py-0.5 text-xs rounded ${
+                        activity.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
+                        activity.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-red-100 text-red-700'
+                      }`}>
+                        {activity.difficulty}
+                      </span>
+                      <span className="text-xs text-neutral-500">{activity.time}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
+
+      {/* Recent Achievements */}
+      <Card className="bg-white rounded-xl shadow-sm">
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold text-neutral-900 mb-4">Recent Achievements</h3>
+          
+          <div className="grid grid-cols-3 gap-4">
+            {badges.map((badge) => (
+              <Badge key={badge.id} badge={badge} size="sm" />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
