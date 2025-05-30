@@ -24,26 +24,26 @@
    ```
 
 2. **Install dependencies**
-At root directory, run:
+   At root directory, run:
    ```bash
    npm install
    ```
 
 3. **Run the frontend**
-At root directory, run:
+   At root directory, run:
    ```bash
    npx vite
    ```
-It will show something like:
+   It will show something like:
 
-```bash
-  VITE v5.4.14  ready in XYZ ms
+   ```bash
+   VITE v5.4.14  ready in XYZ ms
 
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-  ➜  press h + enter to show help
+   ➜  Local:   http://localhost:5173/
+   ➜  Network: use --host to expose
+   ➜  press h + enter to show help
   ```
-Open the URL in your browser to view the app.
+   Open the URL in your browser to view the app.
 
 ---
 
