@@ -54,16 +54,16 @@
 * **Practice programming interview questions**
 * **Get instant feedback** on your solutions
 * **Track your daily streak** to stay on track for your coding interview
-* **Compete on the leaderboard**
+* **Compete on the leaderboard** and challenge your friends
 * **Level up your virtual pet** as you practice
 
 ---
 
 ### Interaction Flows:
 
-* Our first interaction flow includes the main coding interface in DuoLeet where users can practice Leetcode style questions with the ability to check their work and view solutions to problems to solidify their understanding.
+* Our first interaction flow includes the main coding interface in DuoLeet where users can practice Leetcode style questions with the ability to check their work and view solutions to problems to solidify their understanding. We aim to enable users to work on existing practice problems as well as newly created unique problems that help solidify understanding in a topic area.
   
-* Our second main interaction flow included the leaderboard/friends sections of our app, where users can compete with their friends to stay motivated to do coding interview problems. By implementing this second major interaction flow, we allow users to connect with others and work on problems collaboratively before an upcoming interview.
+* Our second main interaction flow involves the leaderboard and friends sections of our app, where users can compete with their friends to stay motivated to do coding interview problems. By implementing this second major interaction flow, we allow users to connect with others and work on problems collaboratively before an upcoming interview.
 
 
 ---
