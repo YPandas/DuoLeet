@@ -170,8 +170,8 @@ export default function Profile() {
                   alt="User avatar" 
                   className="w-24 h-24 rounded-full border-4 border-primary-100 object-contain bg-white object-center mx-auto" 
                 />
-                <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary-500 border-4 border-white flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">{avatarProgress.level}</span>
+                <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary-500 border-4 border-red-400 flex items-center justify-center">
+                  <span className="text-red-400 text-xs font-bold">{avatarProgress.level}</span>
                 </div>
               </div>
               

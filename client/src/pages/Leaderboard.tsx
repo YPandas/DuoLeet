@@ -132,10 +132,10 @@ const LeaderboardTable = ({ users }: { users: LeaderboardUser[] }) => {
                 <td className="px-6 py-4 font-medium">{user.points || rank * 100 - 200}</td>
                 <td className="px-6 py-4">
                   <div className="flex space-x-1">
-                    <span className="w-6 h-6 rounded-full bg-success flex items-center justify-center text-white text-xs" title="Array Master">A</span>
-                    <span className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs" title="5-day Streak">5</span>
+                    <span className="w-6 h-6 rounded-full bg-blue-400 flex items-center justify-center text-white text-xs" title="Array Master">A</span>
+                    <span className="w-6 h-6 rounded-full bg-red-400 flex items-center justify-center text-white text-xs" title="5-day Streak">5</span>
                     {rank <= 5 && (
-                      <span className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-white text-xs" title="Early Bird">E</span>
+                      <span className="w-6 h-6 rounded-full bg-green-400 flex items-center justify-center text-white text-xs" title="Early Bird">E</span>
                     )}
                     {rank <= 4 && (
                       <span className="w-6 h-6 rounded-full bg-neutral-400 flex items-center justify-center text-white text-xs" title="More badges">+2</span>
@@ -215,7 +215,7 @@ export default function Leaderboard() {
       username: "ByteMaster",
       avatar: "/src/avatars/wolf3.png",
       level: 10,
-      streak: 12,
+      streak: 7,
       problemsSolved: 312,
       points: 1580
     },
@@ -224,7 +224,7 @@ export default function Leaderboard() {
       username: "CodeOwl",
       avatar: "/src/avatars/fox3.png",
       level: 8,
-      streak: 9,
+      streak: 7,
       problemsSolved: 295,
       points: 1240
     },
@@ -233,7 +233,7 @@ export default function Leaderboard() {
       username: "TurtleCoder",
       avatar: "/src/avatars/giraffe3.png",
       level: 7,
-      streak: 5,
+      streak: 6,
       problemsSolved: 278,
       points: 980
     },
@@ -242,7 +242,7 @@ export default function Leaderboard() {
       username: "SwiftCoder",
       avatar: "/src/avatars/wolf3.png",
       level: 8,
-      streak: 21,
+      streak: 6,
       problemsSolved: 245,
       points: 250
     },
@@ -251,7 +251,7 @@ export default function Leaderboard() {
       username: "PandaCoder",
       avatar: "/src/avatars/wolf2.png",
       level: 7,
-      streak: 12,
+      streak: 4,
       problemsSolved: 231,
       points: 234
     },
@@ -360,7 +360,7 @@ export default function Leaderboard() {
         {currentUser && (
           <div className="p-4 border-t border-neutral-200 bg-primary-50">
             <div className="flex items-center">
-              <span className="w-10 text-sm font-medium text-primary-700 px-6 py-4">42</span>
+              <span className="w-10 text-sm font-medium text-primary-700 px-6 py-4">8</span>
               <div className="flex items-center px-6 py-4">
                 <div className="w-8 h-8 rounded-full bg-neutral-300 overflow-hidden mr-3">
                   <img 
@@ -376,8 +376,8 @@ export default function Leaderboard() {
               <span className="px-6 py-4 text-sm font-medium text-primary-700">{currentUser.points}</span>
               <div className="px-6 py-4">
                 <div className="flex space-x-1">
-                  <span className="w-6 h-6 rounded-full bg-success flex items-center justify-center text-white text-xs" title="Array Beginner">A</span>
-                  <span className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs" title="5-day Streak">5</span>
+                  <span className="w-6 h-6 rounded-full bg-blue-400 flex items-center justify-center text-white text-xs" title="Array Beginner">A</span>
+                  <span className="w-6 h-6 rounded-full bg-red-400 flex items-center justify-center text-white text-xs" title="5-day Streak">5</span>
                 </div>
               </div>
             </div>
