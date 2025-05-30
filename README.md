@@ -30,19 +30,21 @@
    ```
 
 3. **Run the frontend**
+   
    At root directory, run:
    ```bash
    npx vite
    ```
-   It will show something like:
-
+   
+   You should see output similar to:
    ```bash
    VITE v5.4.14  ready in XYZ ms
 
    ➜  Local:   http://localhost:5173/
    ➜  Network: use --host to expose
    ➜  press h + enter to show help
-  ```
+   ```
+   
    Open the URL in your browser to view the app.
 
 ---
