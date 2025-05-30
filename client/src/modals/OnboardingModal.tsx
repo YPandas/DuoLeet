@@ -56,7 +56,11 @@ export default function OnboardingModal({ isOpen, onClose, onComplete }: Onboard
         username,
         avatar: selectedAvatar,
         email,
-        password
+        password,
+        goals: {
+          solveCount,
+          daysPerWeek
+        }
       });
       onComplete();
     } catch (error) {

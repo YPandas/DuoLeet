@@ -6,13 +6,24 @@ interface User {
   level: number;
   xp: number;
   streak: number;
+  goals?: {
+    solveCount: number;
+    daysPerWeek: number;
+  };
 }
 
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  signup: (userData: { username: string; avatar: string; email: string; password: string }) => Promise<void>;
+  signup: (userData: { 
+    username: string; 
+    avatar: string; 
+    email: string; 
+    password: string;
+    goals?: { solveCount: number; daysPerWeek: number };
+  }) => Promise<void>;
+  updateUserGoals: (goals: { solveCount: number; daysPerWeek: number }) => void;
   logout: () => void;
 }
 
@@ -28,7 +39,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const authStatus = localStorage.getItem('isAuthenticated');
     
     if (userData && authStatus === 'true') {
-      setUser(JSON.parse(userData));
+      const parsedUser = JSON.parse(userData);
+      
+      // Update user data if it has old values (streak 0 or xp 0)
+      if (parsedUser.streak === 0 || parsedUser.xp === 0) {
+        const updatedUser = {
+          ...parsedUser,
+          streak: 5,
+          xp: 10,
+          goals: parsedUser.goals || { solveCount: 3, daysPerWeek: 5 }
+        };
+        setUser(updatedUser);
+        localStorage.setItem('userData', JSON.stringify(updatedUser));
+      } else {
+        setUser(parsedUser);
+      }
+      
       setIsAuthenticated(true);
     }
   }, []);
@@ -40,13 +66,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('isAuthenticated', 'true');
   };
 
-  const signup = async (userData: { username: string; avatar: string; email: string; password: string }) => {
+  const signup = async (userData: { 
+    username: string; 
+    avatar: string; 
+    email: string; 
+    password: string;
+    goals?: { solveCount: number; daysPerWeek: number };
+  }) => {
     const newUser: User = {
       username: userData.username,
       avatar: userData.avatar,
       level: 1,
       xp: 10,
-      streak: 5
+      streak: 5,
+      goals: userData.goals || { solveCount: 3, daysPerWeek: 5 }
     };
     
     setUser(newUser);
@@ -57,6 +90,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('isAuthenticated', 'true');
   };
 
+  const updateUserGoals = (goals: { solveCount: number; daysPerWeek: number }) => {
+    if (user) {
+      const updatedUser = { ...user, goals };
+      setUser(updatedUser);
+      localStorage.setItem('userData', JSON.stringify(updatedUser));
+    }
+  };
+
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
@@ -65,7 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, signup, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, signup, updateUserGoals, logout }}>
       {children}
     </AuthContext.Provider>
   );

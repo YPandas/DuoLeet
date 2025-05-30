@@ -1,44 +1,40 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import Streak from "@/components/Streak";
 import GoalProgress from "@/components/GoalProgress";
 import UserAvatar from "@/components/UserAvatar";
 import Badge from "@/components/Badge";
-import StreakIcon from "@/components/StreakIcon";
-import EasyX10Icon from "@/components/EasyX10Icon";
+import GoalsModal from "@/modals/GoalsModal";
 import { Calendar, Flag, Code, CheckCircle, TrendingUp, Medal, Flame } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import fox3Avatar from "/src/avatars/fox3.png";
+import wolf1Avatar from "/src/avatars/wolf1.png";
+import wolf3Avatar from "/src/avatars/wolf3.png";
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, updateUserGoals } = useAuth();
+  const [isGoalsModalOpen, setIsGoalsModalOpen] = useState(false);
   
-  const lastTwoWeeks = [
-    true, true, true, true, true, true, true,
-    true, true, true, true, true, false, false
-  ];
+  // Use goals directly from user context, with fallback
+  const userGoals = user?.goals || { solveCount: 3, daysPerWeek: 5 };
   
   const goals = [
     {
       id: "1",
       title: "Daily Problems",
       current: 2,
-      target: 3,
-      completed: 0
+      target: userGoals.solveCount,
+      completed: 2,
+      type: "daily" as const
     },
     {
       id: "2",
-      title: "Weekly Medium Problems",
+      title: "Weekly Practice Days",
       current: 4,
-      target: 5,
-      completed: 4
-    },
-    {
-      id: "3",
-      title: "Weekly Hard Problems",
-      current: 1,
-      target: 2,
-      completed: 0
+      target: userGoals.daysPerWeek,
+      completed: 4,
+      type: "weekly" as const
     }
   ];
   
@@ -100,7 +96,7 @@ export default function Dashboard() {
     {
       id: 1,
       name: "Alice Chen",
-      avatar: "1544005365-5e9d0025ebb8",
+      avatar: fox3Avatar,
       action: "solved",
       problem: "Binary Tree Inorder Traversal",
       difficulty: "Easy",
@@ -109,7 +105,7 @@ export default function Dashboard() {
     {
       id: 2,
       name: "Bob Wilson",
-      avatar: "1507003211-a716c11229a6",
+      avatar: wolf1Avatar,
       action: "attempted",
       problem: "Merge k Sorted Lists",
       difficulty: "Hard",
@@ -118,13 +114,17 @@ export default function Dashboard() {
     {
       id: 3,
       name: "Carol Davis",
-      avatar: "1494790108-ea896e356960",
+      avatar: wolf3Avatar,
       action: "solved",
       problem: "Valid Parentheses",
       difficulty: "Easy",
       time: "6 hours ago"
     }
   ];
+
+  const handleGoalsUpdate = (newGoals: { solveCount: number; daysPerWeek: number }) => {
+    updateUserGoals(newGoals);
+  };
 
   if (!user) {
     return (
@@ -173,9 +173,12 @@ export default function Dashboard() {
       </Card>
       
       {/* Stats & Recommendations */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-        <Streak currentStreak={user?.streak || 0} lastTwoWeeks={lastTwoWeeks} />
-        <GoalProgress goals={goals} onEdit={() => {}} />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <GoalProgress 
+          goals={goals} 
+          onEdit={() => setIsGoalsModalOpen(true)}
+          weeklyGoalSummary={userGoals}
+        />
         <UserAvatar 
           name={user?.username || "Guest"}
           level={user?.level || 1}
@@ -183,7 +186,6 @@ export default function Dashboard() {
           xpRequired={100}
           streak={user?.streak || 0}
           avatarUrl={user?.avatar || "/src/avatars/fox2.png"}
-          onCustomize={() => {}}
         />
       </div>
       
@@ -235,7 +237,7 @@ export default function Dashboard() {
               {friendActivity.map((activity) => (
                 <div key={activity.id} className="flex items-center space-x-3">
                   <img 
-                    src={`https://images.unsplash.com/photo-${activity.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40`}
+                    src={activity.avatar.startsWith('/') || activity.avatar.includes('blob:') ? activity.avatar : `https://images.unsplash.com/photo-${activity.avatar}?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40`}
                     alt={activity.name}
                     className="w-10 h-10 rounded-full object-cover"
                   />
@@ -275,6 +277,14 @@ export default function Dashboard() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Goals Modal */}
+      <GoalsModal
+        isOpen={isGoalsModalOpen}
+        onClose={() => setIsGoalsModalOpen(false)}
+        onSave={handleGoalsUpdate}
+        currentGoals={userGoals}
+      />
     </div>
   );
 }

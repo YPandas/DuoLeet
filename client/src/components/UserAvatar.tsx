@@ -7,8 +7,13 @@ import {
   GraduationCap, 
   Glasses, 
   Rocket, 
-  Lock as LockIcon 
+  Lock as LockIcon,
+  Settings,
+  ArrowRight
 } from "lucide-react";
+import fox2Avatar from "/src/avatars/fox2.png";
+import wolf2Avatar from "/src/avatars/wolf2.png";
+import giraffe2Avatar from "/src/avatars/giraffe2.png";
 
 interface AvatarAccessory {
   id: string;
@@ -24,7 +29,6 @@ interface UserAvatarProps {
   xpRequired: number;
   streak: number;
   avatarUrl: string;
-  onCustomize?: () => void;
 }
 
 export default function UserAvatar({
@@ -33,8 +37,7 @@ export default function UserAvatar({
   xp,
   xpRequired,
   streak,
-  avatarUrl,
-  onCustomize
+  avatarUrl
 }: UserAvatarProps) {
   const accessories: AvatarAccessory[] = [
     {
@@ -63,72 +66,75 @@ export default function UserAvatar({
     }
   ];
 
-  const xpPercentage = (xp / xpRequired) * 100;
+  const progressPercentage = (xp / xpRequired) * 100;
+
+  // Function to get next level avatar
+  const getNextLevelAvatar = (currentAvatar: string) => {
+    if (currentAvatar.includes('fox') && !currentAvatar.includes('fox2')) {
+      return fox2Avatar;
+    }
+    if (currentAvatar.includes('wolf') && !currentAvatar.includes('wolf2')) {
+      return wolf2Avatar;
+    }
+    if (currentAvatar.includes('giraffe') && !currentAvatar.includes('giraffe2')) {
+      return giraffe2Avatar;
+    }
+    // If already at level 2 or unknown type, return same avatar
+    return currentAvatar;
+  };
+
+  const nextLevelAvatar = getNextLevelAvatar(avatarUrl);
+  const showNextLevel = nextLevelAvatar !== avatarUrl;
 
   return (
-    <Card className="bg-white">
+    <Card className="bg-white rounded-xl shadow-sm">
       <CardContent className="p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="font-semibold text-lg">Your Avatar</h2>
-          {onCustomize && (
-            <Button 
-              variant="link" 
-              onClick={onCustomize} 
-              className="text-primary text-sm"
-            >
-              Customize
-            </Button>
-          )}
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-neutral-900">Your Avatar</h3>
         </div>
         
-        <div className="flex flex-col items-center">
-          <div className="relative">
-            <div className="w-40 h-40 rounded-full bg-white flex items-center justify-center mb-3">
-              <img 
-                src={avatarUrl} 
-                alt="User avatar" 
-                className="w-32 h-32 object-contain object-center" 
-              />
-            </div>
-            <Badge 
-              className="absolute bottom-3 right-0 bg-success" 
-              variant="outline"
-            >
-              Lvl {level}
-            </Badge>
-          </div>
-          
-          <h3 className="font-semibold text-lg">{name}</h3>
-          <p className="text-sm text-neutral-600 mb-3">
-            Level {level} • {streak} day streak 🔥
-          </p>
-          
-          <div className="w-full mb-4">
-            <div className="flex justify-between text-xs mb-1">
-              <span>XP</span>
-              <span>{xp}/{xpRequired}</span>
-            </div>
-            <Progress value={xpPercentage} className="h-2" />
-          </div>
-          
-          <div className="flex space-x-2">
-            {accessories.map((accessory) => (
-              <div 
-                key={accessory.id}
-                className={`p-2 rounded-full cursor-pointer flex items-center justify-center ${
-                  accessory.unlocked 
-                    ? "bg-neutral-100 hover:bg-neutral-200" 
-                    : "bg-neutral-300 cursor-not-allowed"
-                }`}
-                title={`${accessory.name}${!accessory.unlocked ? " (Locked)" : ""}`}
-              >
-                {accessory.unlocked ? (
-                  accessory.icon
-                ) : (
-                  <LockIcon className="h-5 w-5 text-neutral-500" />
-                )}
+        <div className="text-center">
+          <div className="flex items-center justify-center space-x-6 mb-4">
+            {/* Current Avatar */}
+            <div className="flex flex-col items-center">
+              <div className="w-24 h-24 mb-2">
+                <img 
+                  src={avatarUrl} 
+                  alt={`${name}'s avatar`}
+                  className="w-full h-full object-contain"
+                />
               </div>
-            ))}
+              <span className="text-sm font-medium text-neutral-900">Level {level}</span>
+            </div>
+
+            {/* Arrow and Next Level Avatar */}
+            {showNextLevel && (
+              <>
+                <ArrowRight className="h-6 w-6 text-neutral-400" />
+                <div className="flex flex-col items-center">
+                  <div className="w-24 h-24 mb-2 opacity-60">
+                    <img 
+                      src={nextLevelAvatar} 
+                      alt="Next level avatar"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <span className="text-sm text-neutral-400">Level {level + 1}</span>
+                </div>
+              </>
+            )}
+          </div>
+          
+          <h4 className="font-semibold text-neutral-900 mb-2">{name}</h4>
+          
+          <div className="space-y-3">
+            <div>
+              <div className="flex justify-between text-sm mb-1">
+                <span className="text-neutral-600">XP Progress</span>
+                <span className="font-medium">{xp}/{xpRequired}</span>
+              </div>
+              <Progress value={progressPercentage} className="h-2" />
+            </div>
           </div>
         </div>
       </CardContent>
