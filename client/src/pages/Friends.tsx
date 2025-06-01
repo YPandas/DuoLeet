@@ -16,6 +16,7 @@ import {
   Award,
   Code,
   Search,
+  TrendingUp,
 } from "lucide-react";
 import fox1Avatar from "/src/avatars/fox1.png";
 import fox2Avatar from "/src/avatars/fox2.png";
@@ -168,6 +169,9 @@ export default function Friends() {
   // Form state for “Invite by Email”:
   const [email, setEmail] = useState("");
 
+  // Add state for forum visibility
+  const [showForum, setShowForum] = useState(false);
+
   // -----------------
   // Handlers
   // -----------------
@@ -199,6 +203,11 @@ export default function Friends() {
     setFriendRequestsState((prev) =>
       prev.filter((r) => r.id !== requestId)
     );
+  };
+
+  // Add handler for forum toggle
+  const handleToggleForum = () => {
+    setShowForum(!showForum);
   };
 
   return (
@@ -321,7 +330,7 @@ export default function Friends() {
         <CardContent className="p-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold text-neutral-900">
-              My Friends ({filteredFriends.length})
+              My Friends
             </h3>
 
             <div className="relative">
@@ -399,10 +408,159 @@ export default function Friends() {
 
           {/* View More Button */}
           <div className="mt-6 text-center">
-            <Button variant="outline">View All Forum Posts</Button>
+            <Button variant="outline" onClick={handleToggleForum}>
+              {showForum ? "Hide Forum Posts" : "View All Forum Posts"}
+            </Button>
           </div>
         </CardContent>
       </Card>
+
+      {/* Forum Section - Only show when showForum is true */}
+      {showForum && (
+        <Card className="bg-white rounded-xl shadow-sm border border-neutral-200 mt-8">
+          <CardContent className="p-6">
+            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Friend Forum</h3>
+            
+            <div className="space-y-6">
+              {/* Forum Post */}
+              <div className="border border-neutral-200 rounded-lg p-4">
+                {/* Original Question */}
+                <div className="flex items-start space-x-3 mb-4">
+                  <div className="h-10 w-10 overflow-hidden">
+                    <img
+                      src={fox1Avatar}
+                      alt="JavaTurtle avatar"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-sm font-medium text-neutral-900">JavaTurtle</span>
+                      <span className="text-xs text-neutral-500">2 hours ago</span>
+                    </div>
+                    <h4 className="text-sm font-semibold text-neutral-900 mb-2">
+                      Need help with Two Sum optimization
+                    </h4>
+                    <p className="text-sm text-neutral-700 mb-3">
+                      I solved Two Sum using nested loops but it's O(n²). I heard there's an O(n) solution using hash maps. 
+                      Can someone explain the approach? I'm struggling to understand how to track the indices.
+                    </p>
+                    <div className="flex items-center space-x-4 text-xs text-neutral-500">
+                      <button className="flex items-center space-x-1 hover:text-primary-600">
+                        <TrendingUp className="h-3 w-3" />
+                        <span>2 upvotes</span>
+                      </button>
+                      <button className="flex items-center space-x-1 hover:text-primary-600">
+                        <MessageSquare className="h-3 w-3" />
+                        <span>3 replies</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Reply */}
+                <div className="ml-8 border-l-2 border-neutral-100 pl-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="h-8 w-8 overflow-hidden">
+                      <img
+                        src={wolf2Avatar}
+                        alt="PyOwl avatar"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="text-sm font-medium text-neutral-900">PyOwl</span>
+                        <span className="text-xs text-neutral-500">1 hour ago</span>
+                      </div>
+                      <p className="text-sm text-neutral-700 mb-3">
+                        Great question! The key insight is to use a dictionary to store values you've already seen. 
+                        As you iterate through the array, for each number, check if (target - current_number) exists in your dictionary. 
+                        If it does, you found your pair! If not, add the current number and its index to the dictionary.
+                      </p>
+                      <div className="flex items-center space-x-4 text-xs text-neutral-500">
+                        <button className="flex items-center space-x-1 hover:text-primary-600">
+                          <TrendingUp className="h-3 w-3" />
+                          <span>1 upvote</span>
+                        </button>
+                        <button className="flex items-center space-x-1 hover:text-primary-600">
+                          <MessageSquare className="h-3 w-3" />
+                          <span>Reply</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Reply to Reply */}
+                <div className="ml-16 border-l-2 border-neutral-100 pl-4 mt-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="h-8 w-8 overflow-hidden">
+                      <img
+                        src={fox1Avatar}
+                        alt="JavaTurtle avatar"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="text-sm font-medium text-neutral-900">JavaTurtle</span>
+                        <span className="text-xs text-neutral-500">30 minutes ago</span>
+                      </div>
+                      <p className="text-sm text-neutral-700 mb-3">
+                        That makes so much sense! Thank you @PyOwl 🙏 I just implemented it and got it working. 
+                        The time complexity improvement is amazing!
+                      </p>
+                      <div className="flex items-center space-x-4 text-xs text-neutral-500">
+                        <button className="flex items-center space-x-1 hover:text-primary-600">
+                          <TrendingUp className="h-3 w-3" />
+                          <span>3 upvotes</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Another Forum Post */}
+              <div className="border border-neutral-200 rounded-lg p-4">
+                <div className="flex items-start space-x-3">
+                  <div className="h-10 w-10 overflow-hidden">
+                    <img
+                      src={giraffe1Avatar}
+                      alt="JavaScriptCat avatar"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-sm font-medium text-neutral-900">JavaScriptCat</span>
+                      <span className="text-xs text-neutral-500">4 hours ago</span>
+                    </div>
+                    <h4 className="text-sm font-semibold text-neutral-900 mb-2">
+                      Daily coding streak tips?
+                    </h4>
+                    <p className="text-sm text-neutral-700 mb-3">
+                      I keep breaking my coding streak after 3-4 days. Any tips on maintaining consistency? 
+                      What time of day do you all prefer to solve problems?
+                    </p>
+                    <div className="flex items-center space-x-4 text-xs text-neutral-500">
+                      <button className="flex items-center space-x-1 hover:text-primary-600">
+                        <TrendingUp className="h-3 w-3" />
+                        <span>2 upvotes</span>
+                      </button>
+                      <button className="flex items-center space-x-1 hover:text-primary-600">
+                        <MessageSquare className="h-3 w-3" />
+                        <span>1 reply</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
