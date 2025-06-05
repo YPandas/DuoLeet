@@ -25,6 +25,7 @@ interface AuthContextType {
   }) => Promise<void>;
   updateUserGoals: (goals: { solveCount: number; daysPerWeek: number }) => void;
   logout: () => void;
+  updateUser: (updatedUser: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -105,8 +106,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('isAuthenticated');
   };
 
+  const updateUser = (updatedUser: User) => {
+    setUser(updatedUser);
+    localStorage.setItem('userData', JSON.stringify(updatedUser));
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, signup, updateUserGoals, logout }}>
+    <AuthContext.Provider value={{ 
+      isAuthenticated, 
+      user, 
+      login, 
+      signup, 
+      updateUserGoals,
+      logout,
+      updateUser
+    }}>
       {children}
     </AuthContext.Provider>
   );

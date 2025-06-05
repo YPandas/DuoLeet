@@ -96,7 +96,7 @@ export default function Problem() {
                   <div key={index}>
                     <h3 className="text-lg font-semibold mt-4 mb-2">Example {index + 1}:</h3>
                     <pre className="bg-neutral-100 p-3 rounded-md">
-                      <code>
+                      <code className="text-neutral-800">
                         <strong>Input:</strong> {example.input}
                         <br />
                         <strong>Output:</strong> {example.output}
@@ -115,7 +115,7 @@ export default function Problem() {
                 <ul className="list-disc pl-5">
                   {problem.constraints.map((constraint, index) => (
                     <li key={index}>
-                      <code>{constraint}</code>
+                      <code className="text-neutral-800">{constraint}</code>
                     </li>
                   ))}
                 </ul>
@@ -158,12 +158,12 @@ export default function Problem() {
         </div>
         
         {/* Code Editor */}
-        <div className="w-full md:w-7/12 lg:w-2/3 flex flex-col">
+        <div className="w-full md:w-7/12 lg:w-2/3 overflow-y-auto">
           <CodeEditor 
-            problemId={problem.id}
+            problemId={Number(problem.id)}
             initialCode={getCurrentCode()}
             testCases={testCases}
-            language={selectedLanguage}
+            language={selectedLanguage as "javascript" | "python" | "java" | "cpp"}
             onLanguageChange={(newLanguage) => {
               setSelectedLanguage(newLanguage);
             }}

@@ -44,7 +44,7 @@ export default function Dashboard() {
       name: "5-day Streak",
       title: "5-day Streak",
       icon: <Flame className="h-5 w-5" />,
-      color: "yellow-500",
+      color: "red-500",
       unlocked: true,
     },
     {

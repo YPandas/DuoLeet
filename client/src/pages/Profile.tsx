@@ -14,12 +14,16 @@ import {
   Target
 } from "lucide-react";
 import Badge from "@/components/Badge";
+import TextBadge from "@/components/TextBadge";
 import StreakIcon from "@/components/StreakIcon";
 import EasyX10Icon from "@/components/EasyX10Icon";
 import { useAuth } from "@/contexts/AuthContext";
+import EditProfileModal from "@/modals/EditProfileModal";
+import { useState } from "react";
 
 export default function Profile() {
   const { user } = useAuth();
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
   if (!user) {
     return (
@@ -138,14 +142,15 @@ export default function Profile() {
             
             <div className="flex flex-wrap gap-2 mb-4 justify-center md:justify-start">
               {badges.filter(badge => badge.unlocked).map((badge, index) => (
-                <Badge key={index} className={badge.color}>
+                <TextBadge key={index} className={`text-${badge.color}`}>
+                  {badge.icon && <span className="mr-1">{badge.icon}</span>}
                   {badge.name}
-                </Badge>
+                </TextBadge>
               ))}
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-              <Button>
+              <Button onClick={() => setIsEditProfileOpen(true)}>
                 <Edit className="mr-2 h-4 w-4" /> Edit Profile
               </Button>
               
@@ -293,16 +298,16 @@ export default function Profile() {
               <div key={index} className="flex flex-col p-3 rounded-lg bg-neutral-50">
                 <div className="font-medium text-sm mb-2">{activity.problem}</div>
                 <div className="flex items-center gap-2 mb-2">
-                  <Badge 
+                  <TextBadge 
                     variant="outline" 
-                    className={`text-xs ${
+                    className={
                       activity.difficulty === 'Easy' ? 'border-green-200 text-green-700' :
                       activity.difficulty === 'Medium' ? 'border-yellow-200 text-yellow-700' :
                       'border-red-200 text-red-700'
-                    }`}
+                    }
                   >
                     {activity.difficulty}
-                  </Badge>
+                  </TextBadge>
                   <span className={`text-xs ${
                     activity.status === 'Solved' ? 'text-green-600' : 'text-yellow-600'
                   }`}>
@@ -315,6 +320,12 @@ export default function Profile() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Edit Profile Modal */}
+      <EditProfileModal 
+        isOpen={isEditProfileOpen}
+        onClose={() => setIsEditProfileOpen(false)}
+      />
     </div>
   );
 }

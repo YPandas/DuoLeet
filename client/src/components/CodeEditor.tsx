@@ -15,6 +15,7 @@ import {
   Copy,
   Maximize,
   Loader,
+  RotateCcw,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -85,9 +86,7 @@ export default function CodeEditor({
       const result = await resp.json();
       const updated = testCases.map((tc, i) => ({
         ...tc,
-        status: result.results[i].passed
-          ? "passed"
-          : "failed",
+        status: result.results[i].passed ? "passed" as const : "failed" as const,
         actualOutput: result.results[i].actualOutput,
         error: result.results[i].error,
       }));
@@ -96,7 +95,7 @@ export default function CodeEditor({
       setTestCases(
         testCases.map((tc) => ({
           ...tc,
-          status: "failed",
+          status: "failed" as const,
           error: "Execution error",
         }))
       );
@@ -108,7 +107,7 @@ export default function CodeEditor({
   // run & submit
   const submitCode = async () => {
     setIsSubmitting(true);
-    setTestCases(testCases.map((tc) => ({ ...tc, status: "running" })));
+    setTestCases(testCases.map((tc) => ({ ...tc, status: "running" as const })));
     try {
       const resp = await fetch(`/api/submit/${problemId}`, {
         method: "POST",
@@ -120,7 +119,7 @@ export default function CodeEditor({
       setTestCases(
         result.results.map((r: any, i: number) => ({
           ...testCases[i],
-          status: r.passed ? "passed" : "failed",
+          status: r.passed ? "passed" as const : "failed" as const,
           actualOutput: r.actualOutput,
           error: r.error,
         }))
@@ -136,7 +135,7 @@ export default function CodeEditor({
   const resetCode = () => setCode(initialCode);
 
   return (
-    <Card className="flex-1 flex flex-col">
+    <Card className="flex-1 flex flex-col min-h-[200px]">
       <div className="flex items-center p-4 border-b border-neutral-200">
         <Select
           value={currentLanguage}
@@ -167,19 +166,7 @@ export default function CodeEditor({
             className="text-sm mr-2"
             onClick={resetCode}
           >
-            <svg
-              className="h-4 w-4 mr-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 4v5h.581m15.387 0A8.001 8.001 0 0112 4..."
-              />
-            </svg>
+            <RotateCcw className="h-4 w-4 mr-1" />
             Reset
           </Button>
           <Button variant="outline" size="sm" className="text-sm">
@@ -201,7 +188,7 @@ export default function CodeEditor({
       {/* Editor Area */}
       <div
         ref={editorContainerRef}
-        className="flex-1 bg-neutral-900 overflow-y-auto code-editor text-white text-sm font-mono"
+        className="flex-1 bg-neutral-900 overflow-y-auto code-editor text-white text-sm font-mono min-h-[400px]"
       >
         <textarea
           value={code}
